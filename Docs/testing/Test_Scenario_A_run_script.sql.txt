@@ -1,0 +1,342 @@
+test 1.1-----Socity Registration (Event – 1)
+
+		insert into group_masters
+		values(1,"umariya_society" ,"umariya01",  "umariya007@gmail.co" , "umariya007" , '2019-01-01' , '2019-01-01')
+
+test 1.2-----Socity Parameter Configuration (Event – 2)
+
+		insert into micro_finance.group_params
+		values(1 , 1 , '2019-01-01' , 1 ,"last_sunday", 100 , 12 , 1 , 200 , 3 , '2019-01-01' , '2019-01-01');
+
+
+-----test1.3---Group Member Registration (Event – 4)
+	
+		insert into group_members(id,group_master_id,name,mail,password,mobile,birth_date , kyc_doc_type,kyc_id,member_status,close_date,share_balance,audit_created_dttm,audit_updated_dttm)
+		values(1,1,"amit" , "amit01@gmail.com", "amit01" , 12345678 ,'1990-01-01',"adhar card" , "adhar01", "A",'0000-00-00', 0 , '2019-01-01','2019-01-01')
+
+		insert into group_members(id,group_master_id,name,mail,password,mobile,birth_date , kyc_doc_type,kyc_id,member_status,close_date,share_balance,audit_created_dttm,audit_updated_dttm)
+		values(2,1,"ajay","ajay01@gmail.com", "ajay01" , 987456321 ,'1980-01-01',"adhar card" , "adhar01", "A",'0000-00-00', 0 , '2019-01-01','2019-01-01')
+    
+		insert into group_members(id,group_master_id,name,mail,password,mobile,birth_date , kyc_doc_type,kyc_id,member_status,close_date,share_balance,audit_created_dttm,audit_updated_dttm)
+		values(3,1,"akash","akash01@gmail.com", "akash01" , 654789321 ,'1981-01-01',"adhar card" , "adhar01", "A",'0000-00-00', 0 , '2019-01-01','2019-01-01')
+
+		insert into group_members(id,group_master_id,name,mail,password,mobile,birth_date , kyc_doc_type,kyc_id,member_status,close_date,share_balance,audit_created_dttm,audit_updated_dttm)
+		values(4,1,"ankit","ankit01@gmail.com", "ankit01" , 321456789 ,'1994-07-31',"adhar card" , "adhar01", "A",'0000-00-00', 0 , '2019-01-01','2019-01-01')
+
+		insert into group_members(id,group_master_id,name,mail,password,mobile,birth_date , kyc_doc_type,kyc_id,member_status,close_date,share_balance,audit_created_dttm,audit_updated_dttm)
+		values(5,1,"gagan","gagan01@gmail.com", "gagan01" , 365214789 ,'1994-06-27',"adhar card" , "adhar01", "A",'0000-00-00', 0 , '2019-01-01','2019-01-01')
+
+
+
+-----test 2.1---Start Meeting (Event – 5)
+
+		insert into meeting_calender
+		values(1,1,1,100,'2019-01-01','2019-01-01',6,'a')
+	
+
+-----test2.2--Share Amount collection (Event – 6)(For All members)
+
+	--100
+		select share_face_value FROM micro_finance.group_params where group_master_id=1;
+	
+		update micro_finance.group_members
+		set share_balance=share_balance+100
+		where group_master_id=1
+	
+	--1
+	
+		select cycle_no from micro_finance.meeting_calender
+			from meeting_calender
+			where status='A' and group_master_id=1
+		
+	//for updating clender_id
+	
+		update micro_finance.group_members
+			set calender_id=1
+			where group_master_id=1
+	
+	
+-----test2.3---Get Total Cash Balance (Event – 9)
+
+	-totalShareBalance-
+			select share_balance 
+				from micro_finance.group_members
+				where member_status='A' and group_master_id=1
+        
+			select sum(share_balance)
+				from micro_finance.group_members
+			
+	---totalLoanDisbursed = ln_masters (sum(amt_ln_disb))---
+			select amt_ln_balance
+					from micro_finance.loan_masters
+					where group_master_id=1
+					
+			select sum(amt_ln_balance)
+					from micro_finance.loan_masters
+					where group_master_id=1
+	
+	--totalInstallmentPaidAmount = ln_installments (sum(amt_int_paid)+sum(amt_princ_paid))---
+			 select amt_int_paid
+					from micro_finance.ln_installments
+					where group_master_id=1
+     
+			select amt_princ_paid
+				from micro_finance.ln_installments
+				where group_master_id=1
+				
+			 select sum(amt_int_paid)
+				from micro_finance.ln_installments
+				where group_master_id=1
+				
+			 select sum(amt_princ_paid)
+				from micro_finance.ln_installments
+				where group_master_id=1
+				
+			select sum(amt_int_paid+amt_princ_paid)
+				from micro_finance.ln_installments
+				where group_master_id=1
+	
+	
+	
+	-totalOtherExpense = group_balances(amt_misc_dr)-
+			select amt_misc_dr
+				from micro_finance.group_balances
+				where group_master_id=1
+	
+	-totalCashBalance = totalShareBalance + totalInstallmentPaidAmount - totalLoanDisbursed-
+	
+	
+	
+
+________________
+-----test2.4---Loan Disbursment (Event – 10)
+
+		__insert loan_masters(insert)_____
+		
+		insert into micro_finance.loan_masters
+			values(1,1,100,0,0,0,1)
+		insert into micro_finance.loan_masters
+			values(2,2,200,0,0,0,1)
+		insert into micro_finance.loan_masters
+			values(3,4,150,0,0,0,1)
+		insert into micro_finance.loan_masters
+			values(4,6,150,0,0,0,1)
+			
+		__group_event_log(insert)_____
+		
+		insert into micro_finance.group_event_log
+			values(1,1,1,101,0,'2019-01-01',"having gurnter data",1)
+		insert into micro_finance.group_event_log
+			values(2,1,2,101,0,'2019-01-01',"having gurnter data",1)
+		insert into micro_finance.group_event_log
+			values(3,1,4,101,0,'2019-01-01',"having gurnter data",1)
+		insert into micro_finance.group_event_log
+			values(4,1,6,101,0,'2019-01-01',"having gurnter data",1)
+
+
+-----test2.5---Meeting End (Event – 11)
+
+			___meeting_calender(update)___
+
+		update micro_finance.meeting_calender
+			set status="C" 
+			where group_master_id=1;
+		update micro_finance.meeting_calender
+			set total_active_members=6
+			where group_master_id=1;
+		update micro_finance.meeting_calender
+			set meeting_end_date='2019-01-01'
+			where group_master_id=1;
+
+
+-----test3.1---Start Meeting (Event – 5)
+
+		___meeting_calender(insert)___
+		
+		insert into micro_finance.meeting_calender(id,group_master_id,cycle_no,share_amount,meeting_start_date,status)
+			values(2,1,2,100,'2019-02-01',"A")
+		
+	
+		
+
+
+
+-----test3.2---Share Amount collection (Event – 6)
+
+		SELECT * FROM micro_finance.group_params;
+		SELECT share_face_value
+			FROM micro_finance.group_params;
+			where group_master_id=1
+			
+	//for updating share_balance in group_members
+		update micro_finance.group_members
+			set  share_balance=share_balance+100
+			where group_master_id=1
+			
+	//for finding current calender_id	
+		select cycle_no
+			FROM micro_finance.meeting_calender
+			where group_master_id=1  and status='A'
+			
+	//for updating calender_id in group_members table
+		update micro_finance.group_members
+			set calender_id=2
+			where group_master_id=1
+			
+
+-----test3.3---Loan Installment Collection (Event – 8) 
+
+		//insert ln_installments
+
+		insert into micro_finance.ln_installments
+			values(1,1,1,2,1,'2019-02-01',100)
+
+		insert into micro_finance.ln_installments
+			values(2,1,2,2,2,'2019-02-01',100)
+
+		insert into micro_finance.ln_installments
+			values(3,1,4,2,1.5,'2019-02-01',150)
+
+		insert into micro_finance.ln_installments
+			values(4,1,6,2,0,'2019-02-01',0)
+
+
+		//update ln_masters-update ln_amt_paid
+		
+		select amt_int_paid
+			from micro_finance.ln_installments
+			where group_master_id=1
+		
+		update micro_finance.loan_masters
+			set amt_int_paid=amt_int_paid+1
+			where id=1 and group_master_id=1
+    
+		update micro_finance.loan_masters
+			set amt_int_paid=amt_int_paid+2
+			where id=2 and group_master_id=1
+			
+		update micro_finance.loan_masters
+			set amt_int_paid=amt_int_paid+1.5
+			where id=3 and group_master_id=1
+			
+		update micro_finance.loan_masters
+			set amt_int_paid=amt_int_paid+0
+			where id=4 and group_master_id=1
+			
+		//ln_int_accr update
+		update micro_finance.loan_masters
+			set amt_int_accr=0
+			where  group_master_id=1
+			
+		//for amt_ln_balance
+		select amt_princ_paid
+			from micro_finance.ln_installments
+			where group_master_id=1
+			
+		update micro_finance.loan_masters
+			set amt_ln_balance=amt_ln_disb-100
+			where id=1 and group_master_id=1
+    
+		update micro_finance.loan_masters
+			set amt_ln_balance=amt_ln_disb-100
+			where id=2 and group_master_id=1
+			
+		update micro_finance.loan_masters
+			set amt_ln_balance=amt_ln_disb-150
+			where id=3 and group_master_id=1
+			
+		update micro_finance.loan_masters
+			set amt_ln_balance=amt_ln_disb-0
+			where id=4 and group_master_id=1
+			
+		//group_event_log insert
+		
+		insert into micro_finance.group_event_log
+			values(5,1,1,102,102,'2019-02-01','installment paid',2)
+
+		insert into micro_finance.group_event_log
+			values(6,1,2,102,102,'2019-02-01','installment paid',2)
+
+		insert into micro_finance.group_event_log
+			values(7,1,4,102,151.5,'2019-02-01','installment paid',2)
+
+		insert into micro_finance.group_event_log
+			values(8,1,6,102,0,'2019-02-01','installment not paid',2)
+		
+
+-----test3.4
+		
+	-totalShareBalance-
+			select share_balance 
+				from micro_finance.group_members
+				where member_status='A' and group_master_id=1
+        
+			select sum(share_balance)
+				from micro_finance.group_members
+			
+	---totalLoanDisbursed = ln_masters (sum(amt_ln_disb))---
+			select amt_ln_balance
+					from micro_finance.loan_masters
+					where group_master_id=1
+					
+			select sum(amt_ln_balance)
+					from micro_finance.loan_masters
+					where group_master_id=1
+	
+	--totalInstallmentPaidAmount = ln_installments (sum(amt_int_paid)+sum(amt_princ_paid))---
+			 select amt_int_paid
+					from micro_finance.ln_installments
+					where group_master_id=1
+     
+			select amt_princ_paid
+				from micro_finance.ln_installments
+				where group_master_id=1
+				
+			 select sum(amt_int_paid)
+				from micro_finance.ln_installments
+				where group_master_id=1
+				
+			 select sum(amt_princ_paid)
+				from micro_finance.ln_installments
+				where group_master_id=1
+				
+			select sum(amt_int_paid+amt_princ_paid)
+				from micro_finance.ln_installments
+				where group_master_id=1
+	
+	
+	
+	-totalOtherExpense = group_balances(amt_misc_dr)-
+			select amt_misc_dr
+				from micro_finance.group_balances
+				where group_master_id=1
+	
+	-totalCashBalance = totalShareBalance + totalInstallmentPaidAmount - totalLoanDisbursed-
+
+
+-----test3.5---Loan Disbursment (Event – 10)---
+
+		insert into micro_finance.loan_masters
+			values(5,3,200,0,0,0,1)
+			
+		update micro_finance.loan_masters
+			set amt_ln_disb=amt_ln_disb+100
+			where group_master_id=1 and id=2
+
+
+-----test3.6
+
+
+-----test4.1
+
+
+-----test4.2
+
+
+-----test4.3
+
+
+-----test4.4
+
+
+-----test4.5

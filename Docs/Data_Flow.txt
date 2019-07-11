@@ -1,0 +1,84 @@
+----- Initial Setup ------
+Event - 1 Group Registration
+			I group_masters
+			I group_balances
+			
+Event - 2 Group Parameter Addition
+			I group_params
+			
+Event - 3 Group Parameter Modification
+			U group_params
+			
+Event - 4 Group Member Registration
+			I group_members
+			
+--------- Setup Done ---------
+
+
+--- Meeting Activities ------------ (Monthly)
+
+Event - 5 Meeting Start
+			I meeting_calender
+			IF(amt_ln_balance>0)
+				interest_amount = computeInterest(amt_ln_balance)
+				U ln_masters (amt_ln_balance = amt_ln_balance+interest_amount, amt_int_accr=amt_int_accr+interest_amount)
+			
+Event - 6 Share Amount Collection - ALL
+			U group_members (share_balance = share_balance + share_face_value, calender_id = current_calender_id) For all current group active members
+			
+Event - 7 Share Amount Collection - Individual
+			U group_members (share_balance = share_balance + share_face_value, calender_id = current_calender_id) For all current group Individual members
+
+Event - 8 Loan Installment Collection
+			INP:installment_amount, VAR:principal_ln_install_amount = installment_amount-amt_int_accr, VAR:int_ln_install_amount=amt_int_accr
+			U ln_masters (amt_int_paid = amt_int_paid + int_ln_install_amount, amt_int_accr = 0, amt_ln_balance = amt_ln_balance - installment_amount)
+			I ln_installments (amt_int_paid = int_ln_install_amount, amt_princ_paid = principal_ln_install_amount)
+			I group_event_log (txn_code 102-installment principle, txn_amount = installment_amount)
+			
+Event - 9 Get Total Cash Balance of the group
+			totalShareBalance = group_members (active, sum(share_balance))
+			totalLoanDisbursed = ln_masters (sum(amt_ln_disb))
+			totalInstallmentPaidAmount = ln_installments (sum(amt_int_paid)+sum(amt_princ_paid))
+			totalOtherExpense = group_balances(amt_misc_dr)
+			
+			totalCashBalance = totalShareBalance + totalInstallmentPaidAmount - totalLoanDisbursed - totalOtherExpense
+				
+Event - 10 Loan Disbursment
+			I/U ln_masters (U amt_ln_disb=amt_ln_disb+<<ln_amount>>,amt_ln_balance = amt_ln_balance+<<ln_amount>>
+			I group_event_log (txn_code 101 and remark having gauranter data..)
+			
+Event - 11 Meeting End
+			U meeting_calender(statuc=C, meeting_end_date=current date and time, total_active_members=active members from group_members)
+			
+--------------------------
+
+Event - 12 Get Total Earning
+			totalInterestEarned = ln_masters (sum(amt_int_paid))
+			amt_misc_dr = group_balances(amt_misc_dr)
+			
+			totalIncomeAvailable = totalInterestEarned - amt_misc_dr;
+			
+Event - 13 Miscellenious Debit Event
+			U group_balances (amt_misc_dr= amt_misc_dr + expense_amount)
+			I group_event_log (txn_code =103, txn_amount=expense_amount,remark="Appropriate description")
+		
+		
+----- Pending Actions....
+	1. Reversal support
+	
+	
+--------- Activity to be performed
+1. Create tables (Refer data dictionary)
+	group_masters 
+	group_params 
+	group_members 
+	meeting_calender
+	ln_masters
+	ln_installments
+	group_event_log
+	group_balances
+	
+	Copy syntax of create tables on one file.
+	
+2. Scneario Runs
+	
