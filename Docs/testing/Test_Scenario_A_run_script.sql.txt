@@ -1,34 +1,34 @@
 test 1.1-----Socity Registration (Event – 1)
 
-insert into group_masters (id,name,login_id,email,password,audit_created_dttm,audit_updated_dttm)
-values(1,"umariya_society" ,"umariya01",  "umariya007@gmail.co" , "umariya007" , sysdate() , sysdate());
+	insert into group_masters (id,name,login_id,email,password,audit_created_dttm,audit_updated_dttm)
+	values(1,"umariya_society" ,"umariya01",  "umariya007@gmail.co" , "umariya007" , sysdate() , sysdate());
 
-insert into micro_finance.group_balances (id,group_master_id,amt_share_fac_bal,amt_share_fac_bal_others,amt_misc_dr,audit_created_dttm)
-values (1,1,0,0,0,sysdate());
+	insert into micro_finance.group_balances (id,group_master_id,amt_share_fac_bal,amt_share_fac_bal_others,amt_misc_dr,audit_created_dttm)
+	values (1,1,0,0,0,sysdate());
 
 test 1.2-----Socity Parameter Configuration (Event – 2)
 
-		insert into micro_finance.group_params
-		values(1 , 1 , '2019-01-01' , 1 ,"last_sunday", 100 , 12 , 1 , 200 , 3 , '2019-01-01' , '2019-01-01');
+	insert into micro_finance.group_params
+	values(1 , 1 , '2019-01-01' , 1 ,"last_sunday", 100 , 12 , 1 , 200 , 3 , '2019-01-01' , '2019-01-01');
 
 
 -----test1.3---Group Member Registration (Event – 4)
 
---password (dummy): passw0rd, share_balance(start time): 0, calender_id (first time): null
-insert into group_members(id,group_master_id,name,mail,password,mobile,birth_date , kyc_doc_type,kyc_id,member_status,close_date,share_balance,audit_created_dttm,audit_updated_dttm)
-values(1,1,"amit" , "amit01@gmail.com", "passw0rd" , 12345678 ,'1990-01-01',"adhar card" , "adhar01", "A",null, 0 , sysdate(),sysdate());
+	--password (dummy): passw0rd, share_balance(start time): 0, calender_id (first time): null
+	insert into group_members(id,group_master_id,name,mail,password,mobile,birth_date , kyc_doc_type,kyc_id,member_status,close_date,share_balance,audit_created_dttm,audit_updated_dttm)
+	values(1,1,"amit" , "amit01@gmail.com", "passw0rd" , 12345678 ,'1990-01-01',"adhar card" , "adhar01", "A",null, 0 , sysdate(),sysdate());
 
-insert into group_members(id,group_master_id,name,mail,password,mobile,birth_date , kyc_doc_type,kyc_id,member_status,close_date,share_balance,audit_created_dttm,audit_updated_dttm)
-values(2,1,"ajay","ajay01@gmail.com", "passw0rd" , 987456321 ,'1980-01-01',"adhar card" , "adhar01", "A",null, 0 , sysdate(),sysdate());
+	insert into group_members(id,group_master_id,name,mail,password,mobile,birth_date , kyc_doc_type,kyc_id,member_status,close_date,share_balance,audit_created_dttm,audit_updated_dttm)
+	values(2,1,"ajay","ajay01@gmail.com", "passw0rd" , 987456321 ,'1980-01-01',"adhar card" , "adhar01", "A",null, 0 , sysdate(),sysdate());
 
-insert into group_members(id,group_master_id,name,mail,password,mobile,birth_date , kyc_doc_type,kyc_id,member_status,close_date,share_balance,audit_created_dttm,audit_updated_dttm)
-values(3,1,"akash","akash01@gmail.com", "passw0rd" , 654789321 ,'1981-01-01',"adhar card" , "adhar01", "A",null, 0, sysdate(),sysdate());
+	insert into group_members(id,group_master_id,name,mail,password,mobile,birth_date , kyc_doc_type,kyc_id,member_status,close_date,share_balance,audit_created_dttm,audit_updated_dttm)
+	values(3,1,"akash","akash01@gmail.com", "passw0rd" , 654789321 ,'1981-01-01',"adhar card" , "adhar01", "A",null, 0, sysdate(),sysdate());
 
-insert into group_members(id,group_master_id,name,mail,password,mobile,birth_date , kyc_doc_type,kyc_id,member_status,close_date,share_balance,audit_created_dttm,audit_updated_dttm)
-values(4,1,"ankit","ankit01@gmail.com", "passw0rd" , 321456789 ,'1994-07-31',"adhar card" , "adhar01", "A",null, 0, sysdate(),sysdate());
+	insert into group_members(id,group_master_id,name,mail,password,mobile,birth_date , kyc_doc_type,kyc_id,member_status,close_date,share_balance,audit_created_dttm,audit_updated_dttm)
+	values(4,1,"ankit","ankit01@gmail.com", "passw0rd" , 321456789 ,'1994-07-31',"adhar card" , "adhar01", "A",null, 0, sysdate(),sysdate());
 
-insert into group_members(id,group_master_id,name,mail,password,mobile,birth_date , kyc_doc_type,kyc_id,member_status,close_date,share_balance,audit_created_dttm,audit_updated_dttm)
-values(5,1,"gagan","gagan01@gmail.com", "passw0rd" , 365214789 ,'1994-06-27',"adhar card" , "adhar01", "A",null, 0 , sysdate(),sysdate());
+	insert into group_members(id,group_master_id,name,mail,password,mobile,birth_date , kyc_doc_type,kyc_id,member_status,close_date,share_balance,audit_created_dttm,audit_updated_dttm)
+	values(5,1,"gagan","gagan01@gmail.com", "passw0rd" , 365214789 ,'1994-06-27',"adhar card" , "adhar01", "A",null, 0 , sysdate(),sysdate());
 
 
 -----test 2.1---Start Meeting (Event – 5)
@@ -56,7 +56,7 @@ values(5,1,"gagan","gagan01@gmail.com", "passw0rd" , 365214789 ,'1994-06-27',"ad
 	--100
 	select share_face_value FROM micro_finance.group_params where group_master_id=1;
 	--1
-	select cycle_no from micro_finance.meeting_calender where group_master_id=1 and status='A';
+	select id from micro_finance.meeting_calender where group_master_id=1 and status='A';
 	
 	update micro_finance.group_members set share_balance=share_balance+100,calender_id=1 where group_master_id=1;
 	
@@ -68,7 +68,7 @@ values(5,1,"gagan","gagan01@gmail.com", "passw0rd" , 365214789 ,'1994-06-27',"ad
 		where member_status='A' and group_master_id=1;
 			
 	---totalLoanDisbursed = ln_masters (sum(amt_ln_disb))--0
-		select ifnull(sum(amt_ln_balance),0) AS totalLoanDisbursed
+		select ifnull(sum(amt_ln_disb),0) AS totalLoanDisbursed
 		from micro_finance.loan_masters
 		where group_master_id=1;
 	
@@ -85,7 +85,7 @@ values(5,1,"gagan","gagan01@gmail.com", "passw0rd" , 365214789 ,'1994-06-27',"ad
 			where group_master_id=1
 	
 	-totalCashBalance = totalShareBalance + totalInstallmentPaidAmount - totalLoanDisbursed-totalOtherExpense
-						= 500 + 0 - 0 = 500
+						= 500 + 0 - 0 -0 = 500
 	
 ________________
 -----test2.4---Loan Disbursment (Event – 10)
@@ -104,13 +104,13 @@ ________________
 		__group_event_log(insert)_____
 		
 		insert into micro_finance.group_event_log(id,group_master_id,group_member_id,txn_code,txn_amount,txn_date,remark,calender_id)
-		values(1,1,1,101,0,sysdate(),"2:3",1);
+		values(1,1,1,101,100,sysdate(),"2:3",1);
 		insert into micro_finance.group_event_log(id,group_master_id,group_member_id,txn_code,txn_amount,txn_date,remark,calender_id)
-		values(2,1,2,101,0,sysdate(),"3:4",1);
+		values(2,1,2,101,200,sysdate(),"3:4",1);
 		insert into micro_finance.group_event_log(id,group_master_id,group_member_id,txn_code,txn_amount,txn_date,remark,calender_id)
-		values(3,1,3,101,0,sysdate(),"4:5",1);
+		values(3,1,3,101,100,sysdate(),"4:5",1);
 		insert into micro_finance.group_event_log(id,group_master_id,group_member_id,txn_code,txn_amount,txn_date,remark,calender_id)
-		values(4,1,4,101,0,sysdate(),"5:1",1);
+		values(4,1,4,101,100,sysdate(),"5:1",1);
 
 -----test2.5---Meeting End (Event – 11)
 		--Get total_active_members --output 5
@@ -123,7 +123,7 @@ ________________
 	
 
 -----test3.1---Start Meeting (Event – 5)
-
+		<<Meeting Calender Processing>>
 		--Get cycle_no : 2 --
 		select IFNULL(max(cycle_no),0)+1 cycle_no 
 		from micro_finance.meeting_calender
@@ -134,246 +134,182 @@ ________________
 		from micro_finance.group_members
 		where group_master_id=1 and member_status='A'
 		 
-		-- Get share_amount--(output-100)--
-		select share_face_value
+		-- Get share_amount--(output-100), loan_interest_base (default monthly), rate-----
+		select share_face_value,loan_interest_base,abs(ln_int_rate/12) AS monthly_int_rate
 		from micro_finance.group_params
 		where group_master_id=1;
 		 
 		 -- Insert into meeting_calender --
 		insert into micro_finance.meeting_calender (id,group_master_id,cycle_no,share_amount,meeting_start_date,meeting_end_date,total_active_members,status)
 		values(2,1,2,100,sysdate(),sysdate(),5,'A');
-
 		
-				[--Get interest params, monthly_int_rate = rate/12;
-				sel... 
-			
-				--Interest update for active loans
-				--Get active Loan accounts 5 records 
-				select * from micro_finance.loan_masters where group_master_id=1 and amt_ln_balance > 0;
-				
-				--Get 1 st loan data (amt_ln_balance), interest_amount = amt_ln_balance * (monthly_int_rate/100), interest_amount = 100 * 0.01 = 1
-				update ... set amt_ln_balance = amt_ln_balance+interest_amount, amt_int_accr=amt_int_accr+interest_amount]
-				
-		
-		
+		<<Loan Interest Processing>>
 		--get amt_ln_balance--
-		select amt_ln_balance from micro_finance.loan_masters 
+		select id,amt_ln_balance from micro_finance.loan_masters 
 		where group_master_id=1 and amt_ln_balance > 0;
 		
-		---get loan_interest_base (for monthly)---
-		select loan_interest_base from micro_finance.group_params
+		---get ln_int_rate (for monthly)---
+		select ln_int_rate/12 monthly_int_rate from micro_finance.group_params
 		where group_master_id=1;
 		
-		---calculate interest---
-		select abs(loan_interest_base/100) AS interest
-		from micro_finance.group_params;
+		LOOP
+		ACCT-1
+			--calculate interest amount----
+			int_amount = amt_ln_balance * monthly_int_rate/100
+			int_amount = 100 * 0.01 = 1
+			---update amt_ln_balance in loan_masters--
+			update micro_finance.loan_masters set amt_ln_balance=amt_ln_balance+1, amt_int_accr = amt_int_accr + 1
+			where group_master_id=1 and id=1;
 		 
-		--calculate interest amount----
-		select abs(0.01*amt_ln_balance) as interest_amount
-		from micro_finance.loan_masters
-		where group_master_id=1;
+		ACCT-2
+			--calculate interest amount----
+			int_amount = amt_ln_balance * monthly_int_rate/100
+			int_amount = 200 * 0.01 = 2
+			---update amt_ln_balance in loan_masters--
+			update micro_finance.loan_masters set amt_ln_balance=amt_ln_balance+2, amt_int_accr = amt_int_accr + 2
+			where group_master_id=1 and id=2;
+			
+		ACCT-3
+			--calculate interest amount----
+			int_amount = amt_ln_balance * monthly_int_rate/100
+			int_amount = 100 * 0.01 = 1
+			---update amt_ln_balance in loan_masters--
+			update micro_finance.loan_masters set amt_ln_balance=amt_ln_balance+1, amt_int_accr = amt_int_accr + 1
+			where group_master_id=1 and id=3;
+			
+		ACCT-4
+			--calculate interest amount----
+			int_amount = amt_ln_balance * monthly_int_rate/100
+			int_amount = 100 * 0.01 = 1
+			---update amt_ln_balance in loan_masters--
+			update micro_finance.loan_masters set amt_ln_balance=amt_ln_balance+1, amt_int_accr = amt_int_accr + 1
+			where group_master_id=1 and id=4;
 		
-		---update amt_ln_balance in loan_masters--
-		update micro_finance.loan_masters
-		set amt_ln_balance=amt_ln_balance+1
-		where group_master_id=1 and id=1;
-		 
-		update micro_finance.loan_masters
-		set amt_ln_balance=amt_ln_balance+2
-		where group_master_id=1 and id=2;
-		 
-		update micro_finance.loan_masters
-		set amt_ln_balance=amt_ln_balance+1
-		where group_master_id=1 and id=3;
-		 
-		update micro_finance.loan_masters
-		set amt_ln_balance=amt_ln_balance+1
-		where group_master_id=1 and id=4;
-		
-		----//get amt_int_accr ---
-		select amt_int_accr
-		from micro_finance.loan_masters
-		where group_master_id=1;
-		
-		----update  amt_int_accr ---
-		update micro_finance.loan_masters
-		set amt_int_accr=amt_int_accr+1
-		where group_master_id=1 and id=1;
-
-		update micro_finance.loan_masters
-		set amt_int_accr=amt_int_accr+2
-		where group_master_id=1 and id=2;
-
-		update micro_finance.loan_masters
-		set amt_int_accr=amt_int_accr+1
-		where group_master_id=1 and id=3;
-
-		update micro_finance.loan_masters
-		set amt_int_accr=amt_int_accr+1
-		where group_master_id=1 and id=4;
-		
-
 -----test3.2---Share Amount collection (Event – 6)
 
-		---get share_face_value---
-		select share_face_value 
-		FROM micro_finance.group_params 
-		where group_master_id=1;
+		<<share_balance_collect_for_individual>>
+		ACCT-1
+			---get share_face_value---
+			select share_face_value FROM micro_finance.group_params  where group_master_id=1;
 
-		---get ccurrent calender_id--
-		select cycle_no 
-		from micro_finance.meeting_calender 
-		where group_master_id=1 and status='A';
+			---get ccurrent calender_id--
+			select id AS calender_id from micro_finance.meeting_calender where group_master_id=1 and status='A';
 
-		--update share_balance and calender_id-----
-		update micro_finance.group_members 
-		set share_balance=share_balance+100,calender_id=2
-		where group_master_id=1;
+			--update share_balance and calender_id-----
+			update micro_finance.group_members set share_balance=share_balance+100,calender_id=2  where group_master_id=1 and id=1;
+			
+		ACCT-2
+			---get share_face_value---
+			select share_face_value FROM micro_finance.group_params  where group_master_id=1;
+
+			---get ccurrent calender_id--
+			select id AS calender_id from micro_finance.meeting_calender where group_master_id=1 and status='A';
+
+			--update share_balance and calender_id-----
+			update micro_finance.group_members set share_balance=share_balance+100,calender_id=2  where group_master_id=1 and id=2;
+			
+		ACCT-3
+			---get share_face_value---
+			select share_face_value FROM micro_finance.group_params  where group_master_id=1;
+
+			---get ccurrent calender_id--
+			select id AS calender_id from micro_finance.meeting_calender where group_master_id=1 and status='A';
+
+			--update share_balance and calender_id-----
+			update micro_finance.group_members set share_balance=share_balance+100,calender_id=2  where group_master_id=1 and id=3;
+			
+		ACCT-4
+			---get share_face_value---
+			select share_face_value FROM micro_finance.group_params  where group_master_id=1;
+
+			---get ccurrent calender_id--
+			select id AS calender_id from micro_finance.meeting_calender where group_master_id=1 and status='A';
+
+			--update share_balance and calender_id-----
+			update micro_finance.group_members set share_balance=share_balance+100,calender_id=2  where group_master_id=1 and id=4;
 
 -----test3.3---Loan Installment Collection (Event – 8) 
 
-		(1)U ln_masters (amt_int_paid = amt_int_paid + int_ln_install_amount, amt_int_accr = 0,amt_ln_balance = amt_ln_balance - installment_amount)
-	
+INP:installment_amount, VAR:principal_ln_install_amount = installment_amount-amt_int_accr, VAR:int_ln_install_amount=amt_int_accr
+			U ln_masters (amt_int_paid = amt_int_paid + int_ln_install_amount, amt_int_accr = 0, amt_ln_balance = amt_ln_balance - installment_amount)
+			I ln_installments (amt_int_paid = int_ln_install_amount, amt_princ_paid = principal_ln_install_amount)
+			I group_event_log (txn_code 102-installment principle, txn_amount = installment_amount)
+		
+		ACCT-1 
+			<<UPDATE LOAN MASTER>>
+			--get amt_int_paid,amt_int_accr--
+			select amt_ln_balance,amt_int_paid,amt_int_accr
+			from micro_finance.loan_masters
+			where group_master_id=1 and id=1;
 			
-		--get amt_int_paid--
-		select amt_int_paid
-		from micro_finance.loan_masters
-		where group_master_id=1;
+			INP:installment_amount=101
+			VAR:principal_ln_install_amount = installment_amount-amt_int_accr, VAR:int_ln_install_amount=amt_int_accr
+			VAR:principal_ln_install_amount = 101-1, VAR:int_ln_install_amount=1
+		
+			---update amt_int_paid---
+			update micro_finance.loan_masters set amt_int_paid=amt_int_paid+1,amt_int_accr=0,amt_ln_balance=amt_ln_balance-101 where group_master_id=1 and id=1;
 
-		---get amt_int_accr---
-		select amt_int_accr
-		from micro_finance.loan_masters
-		where group_master_id=1; 
+			<<INSERT LN_INSTALLMENTS>>
+			---get calender_id--2
+			select id as calender_id from micro_finance.meeting_calender where group_master_id=1 and status='A';
+		
+			---update ln_installments 
+			insert into micro_finance.ln_installments(id,group_master_id,group_member_id,calender_id,amt_int_paid,dat_installments,amt_princ_paid)
+			values(1,1,1,2,1,sysdate(),100)
+			
+			---insert group_event_log---
+			insert into micro_finance.group_event_log(id,group_master_id,group_member_id,txn_code,txn_amount,txn_date,remark,calender_id)
+			values(5,1,1,102,101,sysdate(),'installment paid',2);
+			
+		ACCT-2
+			<<UPDATE LOAN MASTER>>
+			--get amt_int_paid,amt_int_accr--
+			select amt_ln_balance,amt_int_paid,amt_int_accr
+			from micro_finance.loan_masters
+			where group_master_id=1 and id=2;
+			
+			INP:installment_amount=102
+			VAR:principal_ln_install_amount = installment_amount-amt_int_accr, VAR:int_ln_install_amount=amt_int_accr
+			VAR:principal_ln_install_amount = 102-2, VAR:int_ln_install_amount=2
+		
+			---update amt_int_paid---
+			update micro_finance.loan_masters set amt_int_paid=amt_int_paid+2,amt_int_accr=0,amt_ln_balance=amt_ln_balance-102 where group_master_id=1 and id=2;
 
-		---update amt_int_paid---
-		update micro_finance.loan_masters
-		set amt_int_paid=amt_int_paid+amt_int_accr
-		where group_master_id=1;
+			<<INSERT LN_INSTALLMENTS>>
+			---get calender_id--2
+			select id as calender_id from micro_finance.meeting_calender where group_master_id=1 and status='A';
+		
+			---update ln_installments 
+			insert into micro_finance.ln_installments(id,group_master_id,group_member_id,calender_id,amt_int_paid,dat_installments,amt_princ_paid)
+			values(2,1,2,2,2,sysdate(),100);
+			
+			insert into micro_finance.group_event_log(id,group_master_id,group_member_id,txn_code,txn_amount,txn_date,remark,calender_id)
+			values(6,1,2,102,102,sysdate(),'installment paid',2);
+			
+		ACCT-3
+			<<UPDATE LOAN MASTER>>
+			--get amt_int_paid,amt_int_accr--
+			select amt_ln_balance,amt_int_paid,amt_int_accr
+			from micro_finance.loan_masters
+			where group_master_id=1 and id=3;
+			
+			INP:installment_amount=101
+			VAR:principal_ln_install_amount = installment_amount-amt_int_accr, VAR:int_ln_install_amount=amt_int_accr
+			VAR:principal_ln_install_amount = 101-1, VAR:int_ln_install_amount=1
+		
+			---update amt_int_paid---
+			update micro_finance.loan_masters set amt_int_paid=amt_int_paid+1,amt_int_accr=0,amt_ln_balance=amt_ln_balance-101 where group_master_id=1 and id=3;
 
-		---update amt_int_accr---
-		update micro_finance.loan_masters
-		set amt_int_accr=0
-		where group_master_id=1;
-
+			<<INSERT LN_INSTALLMENTS>>
+			---get calender_id--2
+			select id as calender_id from micro_finance.meeting_calender where group_master_id=1 and status='A';
 		
-		---update amt_ln_balance----
+			---update ln_installments 				
+			insert into micro_finance.ln_installments(id,group_master_id,group_member_id,calender_id,amt_int_paid,dat_installments,amt_princ_paid)
+			values(3,1,3,2,1,sysdate(),100)
 		
-		 select sum(amt_princ_paid+amt_int_paid) as installments_amounts
-		from micro_finance.ln_installments
-		where group_master_id=1 and id=1;
-		
-		---get installments_amounts---
-		select sum(amt_princ_paid+amt_int_paid) as installments_amounts
-		from micro_finance.ln_installments
-		where group_master_id=1 and id=2;
-		
-		---get installments_amounts---
-		select sum(amt_princ_paid+amt_int_paid) as installments_amounts
-		from micro_finance.ln_installments
-		where group_master_id=1 and id=3;
-
-		---get installments_amounts---
-		select sum(amt_princ_paid+amt_int_paid) as installments_amounts
-		from micro_finance.ln_installments
-		where group_master_id=1 and id=4;
-        
-		select amt_ln_balance
-		from micro_finance.loan_masters
-		where group_master_id=1;
-
-		update micro_finance.loan_masters
-		set amt_ln_balance=amt_ln_balance-101
-		where group_master_id=1 and id=1;
-
-		update micro_finance.loan_masters
-		set amt_ln_balance=amt_ln_balance-102
-		where group_master_id=1 and id=2;
-				
-		update micro_finance.loan_masters
-		set amt_ln_balance=amt_ln_balance-101
-		where group_master_id=1 and id=3;
-		   
-		update micro_finance.loan_masters
-		set amt_ln_balance=amt_ln_balance-1
-		where group_master_id=1 and id=4;
-		
-		
-	(2)I ln_installments (amt_int_paid = int_ln_install_amount, amt_princ_paid = principal_ln_install_amount)
-		
-		---get calender_id--
-		select cycle_no from micro_finance.meeting_calender 
-		where group_master_id=1 and status='A';
-		
-		---get amt_int_paid--
-		select amt_int_paid from micro_finance.loan_masters
-		where group_master_id=1;
-		
-		---get amt_int_accr---
-		select amt_int_accr from micro_finance.loan_masters
-		where group_master_id=1;
-		
-		---update ln_installments 
-		insert into micro_finance.ln_installments(id,group_master_id,group_member_id,calender_id,amt_int_paid,dat_installments,amt_princ_paid)
-		values(1,1,1,2,1,sysdate(),100)
-		
-		insert into micro_finance.ln_installments(id,group_master_id,group_member_id,calender_id,amt_int_paid,dat_installments,amt_princ_paid)
-		values(2,1,2,2,2,sysdate(),100)
-		
-		insert into micro_finance.ln_installments(id,group_master_id,group_member_id,calender_id,amt_int_paid,dat_installments,amt_princ_paid)
-		values(3,1,3,2,1,sysdate(),100)
-		
-		insert into micro_finance.ln_installments(id,group_master_id,group_member_id,calender_id,amt_int_paid,dat_installments,amt_princ_paid)
-		values(4,1,4,2,1,sysdate(),0)
-		
-	(3)I group_event_log (txn_code 102-installment principle, txn_amount = installment_amount)
-		
-		---insert group_event_log---
-		
-		--get amt_princ_paid---
-		select amt_princ_paid
-		from micro_finance.ln_installments
-		where group_master_id=1;
-
-		---get amt_int_paid---
-		select amt_int_paid
-		from micro_finance.ln_installments
-		where group_master_id=1;
-		
-		---get txn_amount---
-		select sum(amt_princ_paid+amt_int_paid) as txn_amount
-		from micro_finance.ln_installments
-		where group_master_id=1 and id=1;
-		
-		---get txn_amount---
-		select sum(amt_princ_paid+amt_int_paid) as txn_amount
-		from micro_finance.ln_installments
-		where group_master_id=1 and id=2;
-
-		select sum(amt_princ_paid+amt_int_paid) as txn_amount
-		from micro_finance.ln_installments
-		where group_master_id=1 and id=3;
-
-		select sum(amt_princ_paid+amt_int_paid) as txn_amount
-		from micro_finance.ln_installments
-		where group_master_id=1 and id=4;
-		
-		---get calender_id---
-		select cycle_no from micro_finance.meeting_calender 
-		where group_master_id=1 and status='A';
-
-		---insert group_event_log---
-		insert into micro_finance.group_event_log(id,group_master_id,group_member_id,txn_code,txn_amount,txn_date,remark,calender_id)
-		values(5,1,1,102,101,sysdate(),'installment paid',2);
-
-		insert into micro_finance.group_event_log(id,group_master_id,group_member_id,txn_code,txn_amount,txn_date,remark,calender_id)
-		values(6,1,2,102,102,sysdate(),'installment paid',2);
-
-		insert into micro_finance.group_event_log(id,group_master_id,group_member_id,txn_code,txn_amount,txn_date,remark,calender_id)
-		values(7,1,3,102,101,sysdate(),'installment paid',2);
-
-		insert into micro_finance.group_event_log(id,group_master_id,group_member_id,txn_code,txn_amount,txn_date,remark,calender_id)
-		values(8,1,4,102,0,sysdate(),'installment not paid',2);
-
+			insert into micro_finance.group_event_log(id,group_master_id,group_member_id,txn_code,txn_amount,txn_date,remark,calender_id)
+			values(7,1,3,102,101,sysdate(),'installment paid',2);
 
 -----test3.4-- Get Total Cash Balance of the group
 
@@ -387,7 +323,7 @@ ________________
 		from micro_finance.loan_masters
 		where group_master_id=1;
         
-		---totalInstallmentPaidAmount = ln_installments (sum(amt_int_paid)+sum(amt_princ_paid))--(305)
+		---totalInstallmentPaidAmount = ln_installments (sum(amt_int_paid)+sum(amt_princ_paid))--(304)
         select ifnull(sum(amt_int_paid+amt_princ_paid),0) AS totalInstallmentPaidAmount
 		from micro_finance.ln_installments
 		where group_master_id=1;
@@ -395,52 +331,44 @@ ________________
 		---totalOtherExpense = group_balances(amt_misc_dr)--(0)
 		select amt_misc_dr AS totalOtherExpense
 		from micro_finance.group_balances
-		where group_master_id=1
+		where group_master_id=1;
 
-	-totalCashBalance = totalShareBalance + totalInstallmentPaidAmount - totalLoanDisbursed-
+		totalCashBalance = totalShareBalance + totalInstallmentPaidAmount - totalLoanDisbursed-
 					  =1000+305-500-0
 					  =805
 
 -----test3.5---Loan Disbursment (Event – 10)---
-
-		---insert ln_disb_amount___	
-		insert into micro_finance.loan_masters(id,group_member_id,amt_ln_disb,amt_ln_balance,amt_int_accr,amt_int_paid,group_master_id)
-		values(5,5,200,200,0,0,1);
+		ACCT-5
+			---get calender_id--2
+			select id as calender_id from micro_finance.meeting_calender where group_master_id=1 and status='A';
+			
+			---get amt_ln_balance--
+			select amt_ln_balance from micro_finance.loan_masters where group_master_id=1 and id=5;
+				---insert ln_disb_amount___	
+				insert into micro_finance.loan_masters(id,group_member_id,amt_ln_disb,amt_ln_balance,amt_int_accr,amt_int_paid,group_master_id)
+				values(5,5,200,200,0,0,1);
+			
+			insert into micro_finance.group_event_log(id,group_master_id,group_member_id,txn_code,txn_amount,txn_date,remark,calender_id)
+			values(9,1,5,101,200,sysdate(),"2:1",2);
 		
-		---get amt_ln_balance--
-		select amt_ln_balance
-		from micro_finance.loan_masters
-		where group_master_id=1;
+		ACCT-4
+			---get calender_id--2
+			select id as calender_id from micro_finance.meeting_calender where group_master_id=1 and status='A';
+			
+			---get amt_ln_balance--
+			select amt_ln_balance from micro_finance.loan_masters where group_master_id=1 and id=4;
+				---update amt_ln_disb--
+				update micro_finance.loan_masters set amt_ln_disb=amt_ln_disb+100 where group_master_id=1 and group_member_id=4;
 
-		---update amt_ln_disb--
-		update micro_finance.loan_masters
-		set amt_ln_disb=amt_ln_disb+100
-		where group_master_id=1 and group_member_id=4;
-
-		---update amt_ln_balance--
-		update micro_finance.loan_masters
-		set amt_ln_balance=amt_ln_balance+100
-		where group_master_id=1 and group_member_id=4;
-		
-		-----I group_event_log (txn_code 101 and remark having gauranter data..)
-		
-		insert into micro_finance.group_event_log(id,group_master_id,group_member_id,txn_code,txn_amount,txn_date,remark,calender_id)
-		values(9,1,4,101,0,sysdate(),"2:3",2);
+			-----I group_event_log (txn_code 101 and remark having gauranter data..)
+			insert into micro_finance.group_event_log(id,group_master_id,group_member_id,txn_code,txn_amount,txn_date,remark,calender_id)
+			values(10,1,4,101,100,sysdate(),"2:3",2);
         
-        insert into micro_finance.group_event_log(id,group_master_id,group_member_id,txn_code,txn_amount,txn_date,remark,calender_id)
-		values(10,1,5,101,0,sysdate(),"2:1",2);
-
-
 -----test3.6---Meeting End (Event – 11)
 
-		 --Get total_active_members --output 5
-		select count(1) active_members 
-		from micro_finance.group_members 
-		where group_master_id=1 and member_status='A';
-		
 		---meeting_calender(update)---
 		update micro_finance.meeting_calender
-		set status="C",total_active_members=5,meeting_end_date=sysdate()
+		set status='C',meeting_end_date=sysdate()
 		where group_master_id=1 and status='A';
 
 
@@ -466,211 +394,198 @@ ________________
 		insert into micro_finance.meeting_calender (id,group_master_id,cycle_no,share_amount,meeting_start_date,meeting_end_date,total_active_members,status)
 		values(3,1,3,100,sysdate(),sysdate(),5,'A');
 		
-	--get amt_ln_balance--
-		select amt_ln_balance from micro_finance.loan_masters 
+	<<LOAN INT Processing>>
+		--get amt_ln_balance--
+		select id,amt_ln_balance from micro_finance.loan_masters 
 		where group_master_id=1 and amt_ln_balance > 0;
 		
-	---get loan_interest_base (for monthly)---
-		select loan_interest_base from micro_finance.group_params
+		---get ln_int_rate (for monthly)---
+		select ln_int_rate/12 monthly_int_rate from micro_finance.group_params
 		where group_master_id=1;
-        
-	---calculate interest---
-		select abs(loan_interest_base/100) AS interest
-		from micro_finance.group_params;
-        
-	select abs(0.01*amt_ln_balance) as interest_amount
-		from micro_finance.loan_masters
-		where group_master_id=1;
-        
-	---update amt_ln_balance in loan_masters--
- 
-		update micro_finance.loan_masters
-		set amt_ln_balance=amt_ln_balance+0
-		where group_master_id=1 and id=1;
-		 
-		update micro_finance.loan_masters
-		set amt_ln_balance=amt_ln_balance+1
-		where group_master_id=1 and id=2;
-		 
-		update micro_finance.loan_masters
-		set amt_ln_balance=amt_ln_balance+0
-		where group_master_id=1 and id=3;
-		 
-		update micro_finance.loan_masters
-		set amt_ln_balance=amt_ln_balance+2
-		where group_master_id=1 and id=4;      
-        
-        update micro_finance.loan_masters
-		set amt_ln_balance=amt_ln_balance+2
-		where group_master_id=1 and id=5;     
 		
+		LOOP
+		ACCT-1
+			--calculate interest amount----
+			int_amount = amt_ln_balance * monthly_int_rate/100
+			int_amount = 0 * 0.01 = 0
+			---update amt_ln_balance in loan_masters--
+			update micro_finance.loan_masters set amt_ln_balance=amt_ln_balance+0, amt_int_accr = amt_int_accr + 0
+			where group_master_id=1 and id=1;
+		 
+		ACCT-2
+			--calculate interest amount----
+			int_amount = amt_ln_balance * monthly_int_rate/100
+			int_amount = 100 * 0.01 = 1
+			---update amt_ln_balance in loan_masters--
+			update micro_finance.loan_masters set amt_ln_balance=amt_ln_balance+1, amt_int_accr = amt_int_accr + 1
+			where group_master_id=1 and id=2;
+			
+		ACCT-3
+			--calculate interest amount----
+			int_amount = amt_ln_balance * monthly_int_rate/100
+			int_amount = 00 * 0.01 = 0
+			---update amt_ln_balance in loan_masters--
+			update micro_finance.loan_masters set amt_ln_balance=amt_ln_balance+0, amt_int_accr = amt_int_accr + 0
+			where group_master_id=1 and id=3;
+			
+		ACCT-4
+			--calculate interest amount----
+			int_amount = amt_ln_balance * monthly_int_rate/100
+			int_amount = 201* 0.01 = 2.01
+			---update amt_ln_balance in loan_masters--
+			update micro_finance.loan_masters set amt_ln_balance=amt_ln_balance+2.01, amt_int_accr = amt_int_accr + 2.01
+			where group_master_id=1 and id=4;
 		
-		----//get amt_int_accr ---
-		select amt_int_accr
-		from micro_finance.loan_masters
-		where group_master_id=1;
-        
-		----update  amt_int_accr ---
+		ACCT-5
+			--calculate interest amount----
+			int_amount = amt_ln_balance * monthly_int_rate/100
+			int_amount = 200 * 0.01 = 2
+			---update amt_ln_balance in loan_masters--
+			update micro_finance.loan_masters set amt_ln_balance=amt_ln_balance+2, amt_int_accr = amt_int_accr + 2
+			where group_master_id=1 and id=5;
 
-		update micro_finance.loan_masters
-		set amt_int_accr=amt_int_accr+0
-		where group_master_id=1 and id=1;
 
-		update micro_finance.loan_masters
-		set amt_int_accr=amt_int_accr+1
-		where group_master_id=1 and id=2;
-
-		update micro_finance.loan_masters
-		set amt_int_accr=amt_int_accr+0
-		where group_master_id=1 and id=3;
-
-		update micro_finance.loan_masters
-		set amt_int_accr=amt_int_accr+2
-		where group_master_id=1 and id=4;
-        
-        update micro_finance.loan_masters
-		set amt_int_accr=amt_int_accr+2
-		where group_master_id=1 and id=5;
-
+			
 -----test4.2---Share Amount collection (Event – 6)---
 
-		---get share_face_value(100)---
-		select share_face_value 
-		FROM micro_finance.group_params 
-		where group_master_id=1;
-        
-		---get ccurrent calender_id(3)--
-		select cycle_no 
-		from micro_finance.meeting_calender 
-		where group_master_id=1 and status='A';
-        
-		--update share_balance and calender_id-----
-		update micro_finance.group_members 
-		set share_balance=share_balance+100,calender_id=3
-		where group_master_id=1;
+
+		ACCT-1
+			---get share_face_value---
+			select share_face_value FROM micro_finance.group_params  where group_master_id=1;
+
+			---get ccurrent calender_id--
+			select id AS calender_id from micro_finance.meeting_calender where group_master_id=1 and status='A';
+
+			--update share_balance and calender_id-----
+			update micro_finance.group_members set share_balance=share_balance+100,calender_id=3  where group_master_id=1 and id=1;
+			
+		ACCT-2
+			---get share_face_value---
+			select share_face_value FROM micro_finance.group_params  where group_master_id=1;
+
+			---get ccurrent calender_id--
+			select id AS calender_id from micro_finance.meeting_calender where group_master_id=1 and status='A';
+
+			--update share_balance and calender_id-----
+			update micro_finance.group_members set share_balance=share_balance+100,calender_id=3  where group_master_id=1 and id=2;
+			
+		ACCT-3
+			---get share_face_value---
+			select share_face_value FROM micro_finance.group_params  where group_master_id=1;
+
+			---get ccurrent calender_id--
+			select id AS calender_id from micro_finance.meeting_calender where group_master_id=1 and status='A';
+
+			--update share_balance and calender_id-----
+			update micro_finance.group_members set share_balance=share_balance+100,calender_id=3  where group_master_id=1 and id=3;
+			
+		ACCT-4
+			---get share_face_value---
+			select share_face_value FROM micro_finance.group_params  where group_master_id=1;
+
+			---get ccurrent calender_id--
+			select id AS calender_id from micro_finance.meeting_calender where group_master_id=1 and status='A';
+
+			--update share_balance and calender_id-----
+			update micro_finance.group_members set share_balance=share_balance+100,calender_id=3 where group_master_id=1 and id=4;
+			
+		ACCT-5
+			---get share_face_value---
+			select share_face_value FROM micro_finance.group_params  where group_master_id=1;
+
+			---get ccurrent calender_id--
+			select id AS calender_id from micro_finance.meeting_calender where group_master_id=1 and status='A';
+
+			--update share_balance and calender_id-----
+			update micro_finance.group_members set share_balance=share_balance+100,calender_id=3 where group_master_id=1 and id=5;
+
+		
 
 -----test4.3---Loan Installment Collection (Event – 8)---
 
 
 		
-(1)U ln_masters (amt_int_paid = amt_int_paid + int_ln_install_amount, amt_int_accr = 0,amt_ln_balance = amt_ln_balance - installment_amount)
-
-		--get amt_int_paid--
-		select amt_int_paid
-		from micro_finance.loan_masters
-		where group_master_id=1;
-        
-		---get amt_int_accr---
-		select amt_int_accr
-		from micro_finance.loan_masters
-		where group_master_id=1; 
-        
-		---update amt_int_paid---
-		update micro_finance.loan_masters
-		set amt_int_paid=amt_int_paid+amt_int_accr
-		where group_master_id=1;
-
-		---update amt_int_accr---
-		update micro_finance.loan_masters
-		set amt_int_accr=0
-		where group_master_id=1;
+		INP:installment_amount, VAR:principal_ln_install_amount = installment_amount-amt_int_accr, VAR:int_ln_install_amount=amt_int_accr
+			U ln_masters (amt_int_paid = amt_int_paid + int_ln_install_amount, amt_int_accr = 0, amt_ln_balance = amt_ln_balance - installment_amount)
+			I ln_installments (amt_int_paid = int_ln_install_amount, amt_princ_paid = principal_ln_install_amount)
+			I group_event_log (txn_code 102-installment principle, txn_amount = installment_amount)
 		
-		
-		
-		
-		
-(2)I ln_installments (amt_int_paid = int_ln_install_amount, amt_princ_paid = principal_ln_install_amount)
-
-		---get calender_id--
-		select cycle_no from micro_finance.meeting_calender 
-		where group_master_id=1 and status='A';
-
-		---get amt_int_paid--
-		select amt_int_paid from micro_finance.loan_masters
-		where group_master_id=1;
-        
-		---get amt_int_accr---
-		select amt_int_accr from micro_finance.loan_masters
-		where group_master_id=1;
-        
-		insert into micro_finance.ln_installments(id,group_master_id,group_member_id,calender_id,amt_int_paid,dat_installments,amt_princ_paid)
-		values(5,1,2,3,1,sysdate(),100)
-				
-		insert into micro_finance.ln_installments(id,group_master_id,group_member_id,calender_id,amt_int_paid,dat_installments,amt_princ_paid)
-		values(6,1,4,3,2,sysdate(),200);
-				
-		insert into micro_finance.ln_installments(id,group_master_id,group_member_id,calender_id,amt_int_paid,dat_installments,amt_princ_paid)
-		values(7,1,5,3,2,sysdate(),100)
-		
-		
-		
-		---update amt_ln_balance
-		select amt_ln_balance
-		from micro_finance.loan_masters
-		where group_master_id=1 and amt_ln_balance>0;
-
-		select ifnull((amt_princ_paid+amt_int_paid),0) as installments_amounts
-		from micro_finance.ln_installments
-		where group_master_id=1;
-        
-		update micro_finance.loan_masters
-		set amt_ln_balance=amt_ln_balance-101
-		where group_master_id=1 and group_member_id=2;
-        
-		update micro_finance.loan_masters
-		set amt_ln_balance=amt_ln_balance-202
-		where group_master_id=1 and group_member_id=4;
-        
-		update micro_finance.loan_masters
-		set amt_ln_balance=amt_ln_balance-102
-		where group_master_id=1 and group_member_id=5;
-		
-		
-(3)I group_event_log (txn_code 102-installment principle, txn_amount = installment_amount)
-
-
-
-		---get amt_princ_paid---
-			select amt_princ_paid
-			from micro_finance.ln_installments
-			where group_master_id=1;
+		ACCT-2 
+			<<UPDATE LOAN MASTER>>
+			--get amt_int_paid,amt_int_accr--
+			select amt_ln_balance,amt_int_paid,amt_int_accr
+			from micro_finance.loan_masters
+			where group_master_id=1 and id=2;
 			
-		---get amt_int_paid---
-			select amt_int_paid
-			from micro_finance.ln_installments
-			where group_master_id=1;
-			
-		---get txn_amount--
-			select sum(amt_princ_paid+amt_int_paid) as txn_amount
-			from micro_finance.ln_installments
-			where group_master_id=1 and group_member_id=2 and calender_id=3;
-			
-		---get txn_amount--
-			select sum(amt_princ_paid+amt_int_paid) as txn_amount
-			from micro_finance.ln_installments
-			where group_master_id=1 and group_member_id=4 and calender_id=3;
-			
-		---get txn_amount--
-			select sum(amt_princ_paid+amt_int_paid) as txn_amount
-			from micro_finance.ln_installments
-			where group_master_id=1 and group_member_id=5 and calender_id=3;
-			
-		---get calender_id---
-		select cycle_no from micro_finance.meeting_calender 
-		where group_master_id=1 and status='A';
-        
-        
-        ---insert group_event_log---
-		insert into micro_finance.group_event_log(id,group_master_id,group_member_id,txn_code,txn_amount,txn_date,remark,calender_id)
-		values(11,1,2,102,101,sysdate(),'installment paid',3);
-        
-      	insert into micro_finance.group_event_log(id,group_master_id,group_member_id,txn_code,txn_amount,txn_date,remark,calender_id)
-		values(12,1,4,102,202,sysdate(),'installment paid',3);  
-        
-		insert into micro_finance.group_event_log(id,group_master_id,group_member_id,txn_code,txn_amount,txn_date,remark,calender_id)
-		values(13,1,5,102,102,sysdate(),'installment paid',3);
+			INP:installment_amount=101
+			VAR:principal_ln_install_amount = installment_amount-amt_int_accr, VAR:int_ln_install_amount=amt_int_accr
+			VAR:principal_ln_install_amount = 101-1, VAR:int_ln_install_amount=1
+		
+			---update amt_int_paid---
+			update micro_finance.loan_masters set amt_int_paid=amt_int_paid+1,amt_int_accr=0,amt_ln_balance=amt_ln_balance-101 where group_master_id=1 and id=2;
 
+			<<INSERT LN_INSTALLMENTS>>
+			---get calender_id--3
+			select id as calender_id from micro_finance.meeting_calender where group_master_id=1 and status='A';
+		
+			---update ln_installments 
+			insert into micro_finance.ln_installments(id,group_master_id,group_member_id,calender_id,amt_int_paid,dat_installments,amt_princ_paid)
+			values(4,1,2,3,1,sysdate(),100)
+			
+			---insert group_event_log---
+			insert into micro_finance.group_event_log(id,group_master_id,group_member_id,txn_code,txn_amount,txn_date,remark,calender_id)
+			values(8,1,2,102,101,sysdate(),'installment paid',3);
+			
+		ACCT-4
+			<<UPDATE LOAN MASTER>>
+			--get amt_int_paid,amt_int_accr--
+			select amt_ln_balance,amt_int_paid,amt_int_accr
+			from micro_finance.loan_masters
+			where group_master_id=1 and id=4;
+			
+			INP:installment_amount=202.01
+			VAR:principal_ln_install_amount = installment_amount-amt_int_accr, VAR:int_ln_install_amount=amt_int_accr
+			VAR:principal_ln_install_amount = 202.01-2.01, VAR:int_ln_install_amount=2.01
+		
+			---update amt_int_paid---
+			update micro_finance.loan_masters set amt_int_paid=amt_int_paid+2.01,amt_int_accr=0,amt_ln_balance=amt_ln_balance-202.01 where group_master_id=1 and id=4;
 
+			<<INSERT LN_INSTALLMENTS>>
+			---get calender_id--3
+			select id as calender_id from micro_finance.meeting_calender where group_master_id=1 and status='A';
+		
+			---update ln_installments 
+			insert into micro_finance.ln_installments(id,group_master_id,group_member_id,calender_id,amt_int_paid,dat_installments,amt_princ_paid)
+			values(5,1,4,3,2.01,sysdate(),200)
+			
+			---insert group_event_log---
+			insert into micro_finance.group_event_log(id,group_master_id,group_member_id,txn_code,txn_amount,txn_date,remark,calender_id)
+			values(9,1,4,102,202.01,sysdate(),'installment paid',3);
+			
+		ACCT-5
+			<<UPDATE LOAN MASTER>>
+			--get amt_int_paid,amt_int_accr--
+			select amt_ln_balance,amt_int_paid,amt_int_accr
+			from micro_finance.loan_masters
+			where group_master_id=1 and id=5;
+			
+			INP:installment_amount=102
+			VAR:principal_ln_install_amount = installment_amount-amt_int_accr, VAR:int_ln_install_amount=amt_int_accr
+			VAR:principal_ln_install_amount = 102-2, VAR:int_ln_install_amount=2
+		
+			---update amt_int_paid---
+			update micro_finance.loan_masters set amt_int_paid=amt_int_paid+2,amt_int_accr=0,amt_ln_balance=amt_ln_balance-102 where group_master_id=1 and id=5;
+
+			<<INSERT LN_INSTALLMENTS>>
+			---get calender_id--3
+			select id as calender_id from micro_finance.meeting_calender where group_master_id=1 and status='A';
+		
+			---update ln_installments 				
+			insert into micro_finance.ln_installments(id,group_master_id,group_member_id,calender_id,amt_int_paid,dat_installments,amt_princ_paid)
+			values(6,1,5,3,2,sysdate(),100)
+		
+			insert into micro_finance.group_event_log(id,group_master_id,group_member_id,txn_code,txn_amount,txn_date,remark,calender_id)
+			values(10,1,5,102,102,sysdate(),'installment paid',3);
 
 -----test4.4---Get Total Cash Balance (Event – 9)
 
@@ -702,16 +617,8 @@ ________________
 	
 -----test4.5---Meeting End (Event – 11)----
 
-		--Get total_active_members --output 5
-			select count(1) active_members 
-			from micro_finance.group_members 
-			where group_master_id=1 and member_status='A';
-		
-		---meeting_calender(update)---
-			update micro_finance.meeting_calender
-			set status="C",total_active_members=5,meeting_end_date=sysdate()
-			where group_master_id=1 and status='A';
-			where id=3 and group_master_id=1 
-				
-				
+---meeting_calender(update)---
+		update micro_finance.meeting_calender
+		set status='C',meeting_end_date=sysdate()
+		where group_master_id=1 and status='A';
 
