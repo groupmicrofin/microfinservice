@@ -7,7 +7,7 @@ CREATE TABLE `group_masters` (
   `audit_created_dttm` datetime DEFAULT NULL,
   `audit_updated_dttm` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 ;
 
 CREATE TABLE `group_params` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -25,7 +25,7 @@ CREATE TABLE `group_params` (
   PRIMARY KEY (`id`),
   KEY `FK_grpmst_1` (`group_master_id`),
   CONSTRAINT `FK_grpmst_1` FOREIGN KEY (`group_master_id`) REFERENCES `group_masters` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 ;
 
 CREATE TABLE `meeting_calender` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -39,7 +39,7 @@ CREATE TABLE `meeting_calender` (
   PRIMARY KEY (`id`),
   KEY `group_master_id_idx` (`group_master_id`),
   CONSTRAINT `FK_metclnd` FOREIGN KEY (`group_master_id`) REFERENCES `group_masters` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 ;
 
 CREATE TABLE `group_members` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -62,7 +62,7 @@ CREATE TABLE `group_members` (
   KEY `group_master_id_idx` (`group_master_id`),
   CONSTRAINT `FK_gm` FOREIGN KEY (`calender_id`) REFERENCES `meeting_calender` (`id`),
   CONSTRAINT `FK_grpmst_2` FOREIGN KEY (`group_master_id`) REFERENCES `group_masters` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 ;
 
 
 CREATE TABLE `group_balances` (
@@ -78,7 +78,7 @@ CREATE TABLE `group_balances` (
   PRIMARY KEY (`id`),
   KEY `FK_gbal` (`group_master_id`),
   CONSTRAINT `FK_gbal` FOREIGN KEY (`group_master_id`) REFERENCES `group_masters` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 ;
 
 CREATE TABLE `loan_masters` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -94,7 +94,7 @@ CREATE TABLE `loan_masters` (
   CONSTRAINT `FK_grpmembr1` FOREIGN KEY (`group_member_id`) REFERENCES `group_members` (`id`),
   CONSTRAINT `FK_grpmst_3` FOREIGN KEY (`group_master_id`) REFERENCES `group_masters` (`id`),
   CONSTRAINT `group_member_id` FOREIGN KEY (`id`) REFERENCES `group_members` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 ;
 
 
 CREATE TABLE `ln_installments` (
@@ -110,7 +110,7 @@ CREATE TABLE `ln_installments` (
   KEY `FK_grpmembr3` (`group_master_id`),
   CONSTRAINT `FK_grpmembr2` FOREIGN KEY (`group_member_id`) REFERENCES `group_members` (`id`),
   CONSTRAINT `FK_grpmembr3` FOREIGN KEY (`group_master_id`) REFERENCES `group_masters` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 ;
 
 
 CREATE TABLE `group_event_log` (
@@ -127,6 +127,6 @@ CREATE TABLE `group_event_log` (
   KEY `group_master_id_idx` (`group_master_id`),
   CONSTRAINT `FK_gel` FOREIGN KEY (`group_master_id`) REFERENCES `group_masters` (`id`),
   CONSTRAINT `FK_gel1` FOREIGN KEY (`group_member_id`) REFERENCES `group_members` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 ;
 
 

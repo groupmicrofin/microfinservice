@@ -94,31 +94,28 @@ ________________
 		
 		insert into micro_finance.loan_masters(id,group_member_id,amt_ln_disb,amt_ln_balance,amt_int_accr,amt_int_paid,group_master_id)
 		values(1,1,100,100,0,0,1);
-		insert into micro_finance.loan_masters(id,group_member_id,amt_ln_disb,amt_ln_balance,amt_int_accr,amt_int_paid,group_master_id)
-		values(2,2,200,200,0,0,1);
-		insert into micro_finance.loan_masters(id,group_member_id,amt_ln_disb,amt_ln_balance,amt_int_accr,amt_int_paid,group_master_id)
-		values(3,3,100,100,0,0,1);
-		insert into micro_finance.loan_masters(id,group_member_id,amt_ln_disb,amt_ln_balance,amt_int_accr,amt_int_paid,group_master_id)
-		values(4,4,100,100,0,0,1);
-		
-		__group_event_log(insert)_____
-		
 		insert into micro_finance.group_event_log(id,group_master_id,group_member_id,txn_code,txn_amount,txn_date,remark,calender_id)
 		values(1,1,1,101,100,sysdate(),"2:3",1);
+		
+		insert into micro_finance.loan_masters(id,group_member_id,amt_ln_disb,amt_ln_balance,amt_int_accr,amt_int_paid,group_master_id)
+		values(2,2,200,200,0,0,1);
 		insert into micro_finance.group_event_log(id,group_master_id,group_member_id,txn_code,txn_amount,txn_date,remark,calender_id)
 		values(2,1,2,101,200,sysdate(),"3:4",1);
+		
+		insert into micro_finance.loan_masters(id,group_member_id,amt_ln_disb,amt_ln_balance,amt_int_accr,amt_int_paid,group_master_id)
+		values(3,3,100,100,0,0,1);
 		insert into micro_finance.group_event_log(id,group_master_id,group_member_id,txn_code,txn_amount,txn_date,remark,calender_id)
 		values(3,1,3,101,100,sysdate(),"4:5",1);
+		
+		insert into micro_finance.loan_masters(id,group_member_id,amt_ln_disb,amt_ln_balance,amt_int_accr,amt_int_paid,group_master_id)
+		values(4,4,100,100,0,0,1);
 		insert into micro_finance.group_event_log(id,group_master_id,group_member_id,txn_code,txn_amount,txn_date,remark,calender_id)
 		values(4,1,4,101,100,sysdate(),"5:1",1);
 
 -----test2.5---Meeting End (Event – 11)
-		--Get total_active_members --output 5
-			select count(1) active_members from micro_finance.group_members where group_master_id=1 and member_status='A';
-			___meeting_calender(update)___
 		
 		update micro_finance.meeting_calender
-			set status="C",total_active_members=5,meeting_end_date=sysdate()
+			set status='C',meeting_end_date=sysdate()
 			where group_master_id=1 and status='A';
 	
 
@@ -135,21 +132,20 @@ ________________
 		where group_master_id=1 and member_status='A'
 		 
 		-- Get share_amount--(output-100), loan_interest_base (default monthly), rate-----
-		select share_face_value,loan_interest_base,abs(ln_int_rate/12) AS monthly_int_rate
-		from micro_finance.group_params
-		where group_master_id=1;
+		select share_face_value, loan_interest_rate,abs(loan_interest_rate/12) AS monthly_int_rate
+		from group_params WHERE group_master_id=1;
 		 
 		 -- Insert into meeting_calender --
 		insert into micro_finance.meeting_calender (id,group_master_id,cycle_no,share_amount,meeting_start_date,meeting_end_date,total_active_members,status)
 		values(2,1,2,100,sysdate(),sysdate(),5,'A');
 		
 		<<Loan Interest Processing>>
-		--get amt_ln_balance--
+		--get amt_ln_balance--4 records 100,200,100,100
 		select id,amt_ln_balance from micro_finance.loan_masters 
 		where group_master_id=1 and amt_ln_balance > 0;
 		
-		---get ln_int_rate (for monthly)---
-		select ln_int_rate/12 monthly_int_rate from micro_finance.group_params
+		---get ln_int_rate (for monthly)---1
+		select loan_interest_rate/12 monthly_int_rate from micro_finance.group_params
 		where group_master_id=1;
 		
 		LOOP
