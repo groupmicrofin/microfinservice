@@ -1,0 +1,22 @@
+cygwin
+
+curl -X POST -H "Content-Type: application/json" -d '{"name":"medha", "email":"medha@gmail.com", "passphrase":"adsadfadsf"}' http://localhost:8080/microfinserv/bankreg/
+
+Database Details
+	Credentials: root/manish6994
+	Machine: localhost
+	Port: 3306
+	
+URL: jdbc:msql://127.0.0.1:3306/micro_finance
+
+--group registration
+curl -X POST -H "Content-Type: application/json" -d '{"name":"manish", "email":"manish@gmail.com", "passphrase":"adsadfadsf"}' http://localhost:8080/microfinserv/bankreg/
+
+--group param add
+curl -X POST -H "Content-Type: application/json" -d '{"groupMasterId":3,"groupStartDate":"2019-07-01","meetingFrequency":1,"meetingSchedule":"last_sunday","shareFaceValue":100 ,"loanInterestRate":12,"loanInterestBase":1,"lnDisbAmountMaxLimitPercent":200,"loanGaurantersCount":2}' http://localhost:8080/microfinserv1/bankparam/
+
+
+{"group_master_id":3,"meeting_frequency":1,"meeting_schedule":"last_sunday"}
+
+insert into micro_finance.group_params
+	values(1 , 1 , '2019-01-01' , 1 ,"last_sunday", 100 , 12 , 1 , 200 , 3 , '2019-01-01' , '2019-01-01')
