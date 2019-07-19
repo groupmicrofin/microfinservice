@@ -1,12 +1,12 @@
 package com.gmf.services.repository;
 
+import com.gmf.services.common.MicroBankConfig;
 import com.gmf.services.model.MicroBankParam;
 
 import java.sql.*;
 
 public class MicrobankParamDaoService {
 
-    private String DB_URL = "jdbc:mysql://localhost:3306/micro_finance?user=root&password=password";
     //private String createMicroBankParamQuery = "INSERT INTO group_params (id,group_master_id,group_start_date,meeting_frequency,meeting_schedule,share_face_value,loan_interest_rate,loan_interest_base,loan_disb_amt_max_lim_percent,loan_gaurnters_count,audit_created_date,audit_update_date) VALUES (?,?,sysdate(),1,'last sunday',100,12,1,200,2,sysdate(),sysdate())";
 
     //private String createMicroBankParamQuery ="INSERT INTO group_params (group_master_id,group_start_date,meeting_frequency,meeting_schedule,share_face_value,loan_interest_rate,loan_interest_base,loan_disb_amt_max_lim_percent,loan_gaurnters_count,audit_created_date,audit_update_date)VALUES (?,sysdate(),1,'last sunday',100,12,1,200,2,sysdate(),sysdate())";
@@ -22,7 +22,7 @@ public class MicrobankParamDaoService {
         System.out.println("first try and cath complete");
         Connection conn=null;
         try {
-            conn = DriverManager.getConnection(DB_URL);
+            conn = DriverManager.getConnection(MicroBankConfig.DB_URL);
             System.out.println("input taken...1");
             PreparedStatement prestmt = conn.prepareStatement(createMicroBankParamQuery, Statement.RETURN_GENERATED_KEYS);
             System.out.println("input taken...2");

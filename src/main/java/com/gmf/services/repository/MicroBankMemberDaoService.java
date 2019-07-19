@@ -1,12 +1,12 @@
 package com.gmf.services.repository;
 
+import com.gmf.services.common.MicroBankConfig;
 import com.gmf.services.model.MicroBankMember;
 
 import java.sql.*;
 
 public class MicroBankMemberDaoService {
 
-    private String DB_URL = "jdbc:mysql://localhost:3306/micro_finance?user=root&password=password";
     private String createMicroBankMemberQuery = "insert into group_members(group_master_id,name,mail,password,mobile,birth_date , kyc_doc_type,kyc_id,member_status,share_balance,audit_created_dttm,audit_updated_dttm)VALUES(?,?,?,?,?,?,?,?,'A',?,sysdate(),sysdate())";
 
     public void createMicroBankMembers(MicroBankMember microBankMember) {
@@ -21,7 +21,7 @@ public class MicroBankMemberDaoService {
 
         Connection conn = null;
         try {
-            conn = DriverManager.getConnection(DB_URL);
+            conn = DriverManager.getConnection(MicroBankConfig.DB_URL);
             System.out.println("input taken");
 
             PreparedStatement prest = conn.prepareStatement(createMicroBankMemberQuery, Statement.RETURN_GENERATED_KEYS);
