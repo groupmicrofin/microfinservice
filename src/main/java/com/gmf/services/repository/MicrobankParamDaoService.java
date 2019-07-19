@@ -3,6 +3,7 @@ package com.gmf.services.repository;
 import com.gmf.services.model.MicroBankParam;
 
 import java.sql.*;
+import java.time.LocalDate;
 
 public class MicrobankParamDaoService {
 
@@ -11,6 +12,7 @@ public class MicrobankParamDaoService {
 
     //private String createMicroBankParamQuery ="INSERT INTO group_params (group_master_id,group_start_date,meeting_frequency,meeting_schedule,share_face_value,loan_interest_rate,loan_interest_base,loan_disb_amt_max_lim_percent,loan_gaurnters_count,audit_created_date,audit_update_date)VALUES (?,sysdate(),1,'last sunday',100,12,1,200,2,sysdate(),sysdate())";
     private String createMicroBankParamQuery ="INSERT INTO group_params (group_master_id,group_start_date,meeting_frequency,meeting_schedule,share_face_value,loan_interest_rate,loan_interest_base,loan_disb_amt_max_lim_percent,loan_gauranters_count,audit_created_date,audit_updated_date)VALUES (?,?,?,?,?,?,?,?,?,sysdate(),sysdate())";
+    private String fetchGroupParamsSQl ="select id,group_start_date,meeting_frequency,meeting_schedule,share_face_value,loan_interest_rate, loan_disb_amt_max_lim_percent,loan_gauranters_count from group_params where group_master_id=?;";
 
     public void create(MicroBankParam microBankParam) {
         System.out.println("dao method created");
@@ -71,6 +73,28 @@ public class MicrobankParamDaoService {
         System.out.println("group param taken");
         MicroBankParam microBankParam = new MicroBankParam();
         //TODO
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException cnf) {
+            System.out.println("Driver Class Not Found....");
+        }
+        System.out.println("first try and catch method complete");
+        //id,group_start_date,meeting_frequency,meeting_schedule,share_face_value,loan_interest_rate, loan_disb_amt_max_lim_percent,loan_gauranters_count
+        try {
+            Connection conn=DriverManager.getConnection(DB_URL);
+            PreparedStatement preparedStatement=conn.prepareStatement(fetchGroupParamsSQl);
+            preparedStatement.setInt(1,groupMasterId);
+            ResultSet rs=preparedStatement.executeQuery();
+            if (rs.next()){
+                microBankParam.setId(rs.getInt("id"));
+                Date startDate = rs.getDate("group_start_date");
+                microBankParam.setGroupStartDate(startDate.toLocalDate());
+            }
+        }catch (SQLException sqlExcp){
+            System.out.println("error:"+sqlExcp.getMessage());
+        }
+        System.out.println("### findById: "+microBankParam);
         return microBankParam;
     }
 }

@@ -1,4 +1,4 @@
-clean data
+--clean data
 DELETE FROM group_event_log;
 DELETE FROM group_params;
 UPDATE group_members SET calender_id=NULL;
@@ -16,19 +16,19 @@ curl -X POST -H "Content-Type: application/json" -d '{"name":"umariya_society", 
 
 test 1.2-----Socity Parameter Configuration (Event – 2)
 
-curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterId":9,"groupStartDate":"2019-01-01","meetingFrequency":1,"meetingSchedule":"last_sunday","shareFaceValue":100 ,"loanInterestRate":12.0,"loanInterestBase":1.0,"lnDisbAmountMaxLimitPercent":200,"loanGaurantersCount":2}' http://localhost:8080/microfinserv1/bankparam/
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterId":10,"groupStartDate":"2019-01-01","meetingFrequency":1,"meetingSchedule":"last_sunday","shareFaceValue":100 ,"loanInterestRate":12.0,"loanInterestBase":1.0,"lnDisbAmountMaxLimitPercent":200,"loanGaurantersCount":2}' http://localhost:8080/microfinserv1/bankparam/
 
 -----test1.3---Group Member Registration (Event – 4)
 
-curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":9,"name":"hemo","mail":"hemo091@gmail.com","mobile":98765432,"birthdate":"2019-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":10,"name":"hemo","mail":"hemo091@gmail.com","mobile":98765432,"birthdate":"2019-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
 
-curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":9,"name":"hemo1","mail":"hemo091@gmail.com","mobile":98765432,"birthdate":"2019-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":10,"name":"hemo1","mail":"hemo091@gmail.com","mobile":98765432,"birthdate":"2019-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
 
-curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":9,"name":"hemo2","mail":"hemo091@gmail.com","mobile":98765432,"birthdate":"2019-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":10,"name":"hemo2","mail":"hemo091@gmail.com","mobile":98765432,"birthdate":"2019-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
 
-curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":9,"name":"hemo3","mail":"hemo091@gmail.com","mobile":98765432,"birthdate":"2019-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":10,"name":"hemo3","mail":"hemo091@gmail.com","mobile":98765432,"birthdate":"2019-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
 
-curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":9,"name":"hemo4","mail":"hemo091@gmail.com","mobile":98765432,"birthdate":"2019-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":10,"name":"hemo4","mail":"hemo091@gmail.com","mobile":98765432,"birthdate":"2019-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
 
 -----test 2.1---Start Meeting (Event – 5)
 

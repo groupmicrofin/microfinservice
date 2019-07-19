@@ -15,12 +15,13 @@ public class MeetingCalenderService {
     public void createMeetingCalender(int groupMasterID) {
         System.out.println("Meeting calender created ");
         //1. Get max current cycle no
-        int maxCycleNo = calenderDaoService.maxCurrentCycleNumber(groupMasterID);
+        int maxCycleNo = calenderDaoService.fetchNextMeetingCycleNo(groupMasterID);
         //2. Get total active member count
         int totalActiveLnAccts = memberDaoService.getTotalActiveMember(groupMasterID);
         //3. Get Group Param
         MicroBankParam microBankParam = paramDaoService.findById(groupMasterID);
         int shareFaceValue = microBankParam.getShareFaceValue();
+        /*
         //4. create meeting calender
         MeetingCalender meetingCalender = new MeetingCalender();
         meetingCalender.setCycleNo(maxCycleNo);
@@ -28,5 +29,6 @@ public class MeetingCalenderService {
         meetingCalender.setShareAmount(shareFaceValue);
         meetingCalender.setStatus("A");
         calenderDaoService.createMeetingCalender(meetingCalender);
+        */
     }
 }
