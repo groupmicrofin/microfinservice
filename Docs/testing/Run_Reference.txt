@@ -13,10 +13,11 @@ URL: jdbc:msql://127.0.0.1:3306/micro_finance
 curl -X POST -H "Content-Type: application/json" -d '{"name":"manish", "email":"manish@gmail.com", "passphrase":"adsadfadsf"}' http://localhost:8080/microfinserv/bankreg/
 
 --group param add
-curl -X POST -H "Content-Type: application/json" -d '{"groupMasterId":3,"groupStartDate":"2019-07-01","meetingFrequency":1,"meetingSchedule":"last_sunday","shareFaceValue":100 ,"loanInterestRate":12,"loanInterestBase":1,"lnDisbAmountMaxLimitPercent":200,"loanGaurantersCount":2}' http://localhost:8080/microfinserv1/bankparam/
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterId":3,"groupStartDate":"2019-07-01","meetingFrequency":1,"meetingSchedule":"last_sunday","shareFaceValue":100 ,"loanInterestRate":12.0,"loanInterestBase":1.0,"lnDisbAmountMaxLimitPercent":200,"loanGaurantersCount":2}' http://localhost:8080/microfinserv1/bankparam/
 
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterId":2,"groupStartDate":"2019-08-01","meetingFrequency":1,"meetingSchedule":"first_sunday","shareFaceValue":100 ,"loanInterestRate":12.0,"loanInterestBase":1.0,"lnDisbAmountMaxLimitPercent":200,"loanGaurantersCount":2}' http://localhost:8080/microfinserv1/bankparam/
 
-{"group_master_id":3,"meeting_frequency":1,"meeting_schedule":"last_sunday"}
-
-insert into micro_finance.group_params
-	values(1 , 1 , '2019-01-01' , 1 ,"last_sunday", 100 , 12 , 1 , 200 , 3 , '2019-01-01' , '2019-01-01')
+--bank memer registration
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":5,"name":"hemo","mail":"hemo091@gmail.com","mobile":98765432,"birthdate":"2019-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
+		
+		
