@@ -4,9 +4,10 @@ import com.gmf.services.model.MeetingCalender;
 
 import java.sql.*;
 
+import static com.gmf.services.common.MicroBankConfig.DB_URL;
+
 public class MicroBankCalenderDaoService {
 
-    private String DB_URL = "jdbc:mysql://localhost:3306/micro_finance?user=root&password=password";
     private String fetchNextMeetingCycleNo = "select IFNULL(max(cycle_no),0)+1 cycle_no from micro_finance.meeting_calender where group_master_id=?;";
     private String createMeetingCalenderQuery = "insert into micro_finance.meeting_calender (group_master_id,cycle_no,share_amount,meeting_start_date,meeting_end_date,total_active_members,status)VALUES(?,?,?,sysdate(),sysdate(),?,?);";
 

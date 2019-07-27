@@ -15,6 +15,7 @@ public class LoanService {
         List<LoanMaster> loanMasterList = loanMasterDaoService.getActiveLoamAccounts(groupMasterId);
         //2. loan accounts calculate interest
         for(LoanMaster loanMaster:loanMasterList){
+            //TODO
             loanMasterDaoService.updateLoanMaster(loanMaster);
         }
     }

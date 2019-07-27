@@ -31,6 +31,9 @@ public class MicroBankMember {
     private LocalDate auditCreatedDate;
     private LocalDate auditUpdatedDate;
 
+    public MicroBankMember() {
+    }
+
     public int getId() {
         return id;
     }

@@ -5,11 +5,13 @@ import com.gmf.services.model.MicroBankMember;
 
 import java.sql.*;
 
+import static com.gmf.services.common.MicroBankConfig.DB_URL;
+
 public class MicroBankMemberDaoService {
 
     private String createMicroBankMemberQuery = "insert into group_members(group_master_id,name,mail,password,mobile,birth_date , kyc_doc_type,kyc_id,member_status,share_balance,audit_created_dttm,audit_updated_dttm)VALUES(?,?,?,?,?,?,?,?,'A',?,sysdate(),sysdate())";
     private String fetchTotalActiveMemberSQL = "select count(1) active_members from group_members where group_master_id=? and member_status='A';";
-
+    private String fetchShareBalance = "select share_balance FROM micro_finance.group_members where group_master_id=1;";
 
     public void createMicroBankMembers(MicroBankMember microBankMember) {
         System.out.println("dao method started");
@@ -23,7 +25,7 @@ public class MicroBankMemberDaoService {
 
         Connection conn = null;
         try {
-            conn = DriverManager.getConnection(MicroBankConfig.DB_URL);
+            conn = DriverManager.getConnection(DB_URL);
             System.out.println("input taken");
 
             PreparedStatement prest = conn.prepareStatement(createMicroBankMemberQuery, Statement.RETURN_GENERATED_KEYS);
@@ -63,17 +65,17 @@ public class MicroBankMemberDaoService {
     }
 
     public int getTotalActiveMember(int groupMasterId) {
-        System.out.println("####MBMDaoService:getTotalActiveMembers:Group:"+groupMasterId);
+        System.out.println("####MBMDaoService:getTotalActiveMembers:Group:" + groupMasterId);
         int totalActiveLoanCount = 0;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException cnf) {
-            System.out.println("Driver Class Not Found...."+cnf.getMessage());
+            System.out.println("Driver Class Not Found...." + cnf.getMessage());
         }
         try {
             Connection conn = DriverManager.getConnection(DB_URL);
             PreparedStatement prestmt = conn.prepareStatement(fetchTotalActiveMemberSQL);
-            prestmt.setInt(1,groupMasterId);
+            prestmt.setInt(1, groupMasterId);
 
             ResultSet rs = prestmt.executeQuery();
 
@@ -82,26 +84,40 @@ public class MicroBankMemberDaoService {
             }
 
         } catch (Exception excp) {
-            System.out.println("Error "+excp.getMessage());
+            System.out.println("Error " + excp.getMessage());
         }
-        System.out.println("####MBMDaoService:getTotalActiveMembers:TotalActive Members "+totalActiveLoanCount + " for group "+groupMasterId);
+        System.out.println("####MBMDaoService:getTotalActiveMembers:TotalActive Members " + totalActiveLoanCount + " for group " + groupMasterId);
         return totalActiveLoanCount;
+    }
+
+    //get share balance
+    public int getShareBalance(MicroBankMember microBankMember) {
+        System.out.println("getting share balance");
+        int ShareBalance = 0;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException cnf) {
+            System.out.println("Driver Class Not Found...." + cnf.getMessage());
+        }
+        System.out.println("first try and catch method ");
+
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL);
+            PreparedStatement preparedStatement = conn.prepareStatement(fetchShareBalance);
+            preparedStatement.setInt(1, groupMasterId);
+            ResultSet rs = preparedStatement.executeQuery(fetchShareBalance);
+
+            if (rs.next()) {
+                ShareBalance = rs.getInt("share_balance");
+            }
+        } catch (Exception excp) {
+            System.out.println("error:" + excp.getMessage());
+        }
+        return ShareBalance;
     }
 }
 
 
 
-    /*try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection(DB_URL);
-            Statement prestmt = conn.createStatement();
-            ResultSet rs = prestmt.executeQuery(fetchTotalActiveMemberSQL);
-            int totalActiveLoanCount = 0;
-            while (rs.next()) {
-                totalActiveLoanCount++;
-            }
-            return totalActiveLoanCount;
-        } catch (Exception excp) {
-            System.out.println("error");
-        }
-    */
+

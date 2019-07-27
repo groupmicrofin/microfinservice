@@ -5,7 +5,7 @@ UPDATE group_members SET calender_id=NULL;
 DELETE FROM group_members;
 DELETE FROM meeting_calender;
 DELETE FROM ln_installments;
-DELETE FROM loan_masters;
+DELETE FROM loan_masters; 
 DELETE FROM group_balances;
 DELETE FROM group_masters;
 
@@ -16,24 +16,24 @@ curl -X POST -H "Content-Type: application/json" -d '{"name":"umariya_society", 
 
 test 1.2-----Socity Parameter Configuration (Event – 2)
 
-curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterId":10,"groupStartDate":"2019-01-01","meetingFrequency":1,"meetingSchedule":"last_sunday","shareFaceValue":100 ,"loanInterestRate":12.0,"loanInterestBase":1.0,"lnDisbAmountMaxLimitPercent":200,"loanGaurantersCount":2}' http://localhost:8080/microfinserv1/bankparam/
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterId":3,"groupStartDate":"2019-01-01","meetingFrequency":1,"meetingSchedule":"last_sunday","shareFaceValue":100 ,"loanInterestRate":12.0,"loanInterestBase":1.0,"lnDisbAmountMaxLimitPercent":200,"loanGaurantersCount":2}' http://localhost:8080/microfinserv1/bankparam/
 
 -----test1.3---Group Member Registration (Event – 4)
 
-curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":10,"name":"hemo","mail":"hemo091@gmail.com","mobile":98765432,"birthdate":"2019-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":3,"name":"ankit","mail":"ankit01@gmail.com","mobile":98765432,"birthdate":"1994-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
 
-curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":10,"name":"hemo1","mail":"hemo091@gmail.com","mobile":98765432,"birthdate":"2019-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":3,"name":"ajay","mail":"ajay01@gmail.com","mobile":98765432,"birthdate":"1995-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
 
-curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":10,"name":"hemo2","mail":"hemo091@gmail.com","mobile":98765432,"birthdate":"2019-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":3,"name":"anil","mail":"anil01@gmail.com","mobile":98225432,"birthdate":"1996-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
 
-curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":10,"name":"hemo3","mail":"hemo091@gmail.com","mobile":98765432,"birthdate":"2019-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":3,"name":"amol","mail":"amol01@gmail.com","mobile":98335432,"birthdate":"1993-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
 
-curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":10,"name":"hemo4","mail":"hemo091@gmail.com","mobile":98765432,"birthdate":"2019-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
+ 
 
 -----test 2.1---Start Meeting (Event – 5)
 
 
-curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":9}' http://localhost:8080/microfinserv1/startmeeting/
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":3}' http://localhost:8080/microfinserv1/startmeeting/
 
 	--Get cycle_no : 1
 	select IFNULL(max(cycle_no),0)+1 cycle_no from micro_finance.meeting_calender where group_master_id=1;

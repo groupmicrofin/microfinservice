@@ -22,4 +22,10 @@ public class MicroBankMemberResource {
         return responseEntity;
 
     }
+    public ResponseEntity<?> updateMicroBankMembers(@RequestBody MicroBankMember microBankMember){
+        System.out.println("updating microBank Member");
+        //microBankMemberUpdateService
+
+    }
+
 }

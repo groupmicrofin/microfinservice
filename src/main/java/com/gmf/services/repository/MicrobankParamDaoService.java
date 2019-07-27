@@ -6,13 +6,17 @@ import com.gmf.services.model.MicroBankParam;
 import java.sql.*;
 import java.time.LocalDate;
 
+import static com.gmf.services.common.MicroBankConfig.DB_URL;
+
 public class MicrobankParamDaoService {
 
     //private String createMicroBankParamQuery = "INSERT INTO group_params (id,group_master_id,group_start_date,meeting_frequency,meeting_schedule,share_face_value,loan_interest_rate,loan_interest_base,loan_disb_amt_max_lim_percent,loan_gaurnters_count,audit_created_date,audit_update_date) VALUES (?,?,sysdate(),1,'last sunday',100,12,1,200,2,sysdate(),sysdate())";
 
     //private String createMicroBankParamQuery ="INSERT INTO group_params (group_master_id,group_start_date,meeting_frequency,meeting_schedule,share_face_value,loan_interest_rate,loan_interest_base,loan_disb_amt_max_lim_percent,loan_gaurnters_count,audit_created_date,audit_update_date)VALUES (?,sysdate(),1,'last sunday',100,12,1,200,2,sysdate(),sysdate())";
-    private String createMicroBankParamQuery ="INSERT INTO group_params (group_master_id,group_start_date,meeting_frequency,meeting_schedule,share_face_value,loan_interest_rate,loan_interest_base,loan_disb_amt_max_lim_percent,loan_gauranters_count,audit_created_date,audit_updated_date)VALUES (?,?,?,?,?,?,?,?,?,sysdate(),sysdate())";
-    private String fetchGroupParamsSQl ="select id,group_start_date,meeting_frequency,meeting_schedule,share_face_value,loan_interest_rate, loan_disb_amt_max_lim_percent,loan_gauranters_count from group_params where group_master_id=?;";
+    private String createMicroBankParamQuery = "INSERT INTO group_params (group_master_id,group_start_date,meeting_frequency,meeting_schedule,share_face_value,loan_interest_rate,loan_interest_base,loan_disb_amt_max_lim_percent,loan_gauranters_count,audit_created_date,audit_updated_date)VALUES (?,?,?,?,?,?,?,?,?,sysdate(),sysdate())";
+    private String fetchGroupParamsSQl = "select id,group_start_date,meeting_frequency,meeting_schedule,share_face_value,loan_interest_rate, loan_disb_amt_max_lim_percent,loan_gauranters_count from group_params where group_master_id=?;";
+    private String fetchShareFacevalue = "select share_face_value FROM micro_finance.group_params  where group_master_id=1;";
+
 
     public void create(MicroBankParam microBankParam) {
         System.out.println("dao method created");
@@ -22,22 +26,22 @@ public class MicrobankParamDaoService {
             System.out.println("Driver Class Not Found....");
         }
         System.out.println("first try and cath complete");
-        Connection conn=null;
+        Connection conn = null;
         try {
-            conn = DriverManager.getConnection(MicroBankConfig.DB_URL);
+            conn = DriverManager.getConnection(DB_URL);
             System.out.println("input taken...1");
             PreparedStatement prestmt = conn.prepareStatement(createMicroBankParamQuery, Statement.RETURN_GENERATED_KEYS);
             System.out.println("input taken...2");
             //prestmt.setInt(1, microBankParam.getId());
-            prestmt.setInt(1,microBankParam.getGroupMasterId());
-            prestmt.setDate(2,Date.valueOf(microBankParam.getGroupStartDate()));
-            prestmt.setInt(3,microBankParam.getMeetingFrequency());
-            prestmt.setString(4,microBankParam.getMeetingSchedule());
-            prestmt.setInt(5,microBankParam.getShareFaceValue());
-            prestmt.setFloat(6,microBankParam.getLoanInterestRate());
-            prestmt.setFloat(7,microBankParam.getLoanInterestBase());
-            prestmt.setInt(8,microBankParam.getLnDisbAmountMaxLimitPercent());
-            prestmt.setInt(9,microBankParam.getLoanGaurantersCount());
+            prestmt.setInt(1, microBankParam.getGroupMasterId());
+            prestmt.setDate(2, Date.valueOf(microBankParam.getGroupStartDate()));
+            prestmt.setInt(3, microBankParam.getMeetingFrequency());
+            prestmt.setString(4, microBankParam.getMeetingSchedule());
+            prestmt.setInt(5, microBankParam.getShareFaceValue());
+            prestmt.setFloat(6, microBankParam.getLoanInterestRate());
+            prestmt.setFloat(7, microBankParam.getLoanInterestBase());
+            prestmt.setInt(8, microBankParam.getLnDisbAmountMaxLimitPercent());
+            prestmt.setInt(9, microBankParam.getLoanGaurantersCount());
 
             System.out.println("input taken");
 
@@ -54,14 +58,14 @@ public class MicrobankParamDaoService {
 
         } catch (SQLException sqlException) {
             System.out.println("error in connection" + sqlException.getMessage());
-        }catch (Exception excep){
-            System.out.println("Exception:"+excep.getMessage());
-        }finally {
-            if(conn!=null) {
+        } catch (Exception excep) {
+            System.out.println("Exception:" + excep.getMessage());
+        } finally {
+            if (conn != null) {
                 try {
                     conn.close();
-                }catch (SQLException sqlExce){
-                    System.out.println("error in closing connection:"+sqlExce.getMessage());
+                } catch (SQLException sqlExce) {
+                    System.out.println("error in closing connection:" + sqlExce.getMessage());
                 }
 
             }
@@ -69,7 +73,7 @@ public class MicrobankParamDaoService {
         System.out.println("second cath method complete");
     }
 
-    public MicroBankParam findById(int groupMasterId){
+    public MicroBankParam findById(int groupMasterId) {
         System.out.println("group param taken");
         MicroBankParam microBankParam = new MicroBankParam();
         //TODO
@@ -82,19 +86,49 @@ public class MicrobankParamDaoService {
         System.out.println("first try and catch method complete");
         //id,group_start_date,meeting_frequency,meeting_schedule,share_face_value,loan_interest_rate, loan_disb_amt_max_lim_percent,loan_gauranters_count
         try {
-            Connection conn=DriverManager.getConnection(DB_URL);
-            PreparedStatement preparedStatement=conn.prepareStatement(fetchGroupParamsSQl);
-            preparedStatement.setInt(1,groupMasterId);
-            ResultSet rs=preparedStatement.executeQuery();
-            if (rs.next()){
+            Connection conn = DriverManager.getConnection(DB_URL);
+            PreparedStatement preparedStatement = conn.prepareStatement(fetchGroupParamsSQl);
+            preparedStatement.setInt(1, groupMasterId);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
                 microBankParam.setId(rs.getInt("id"));
                 Date startDate = rs.getDate("group_start_date");
                 microBankParam.setGroupStartDate(startDate.toLocalDate());
             }
-        }catch (SQLException sqlExcp){
-            System.out.println("error:"+sqlExcp.getMessage());
+        } catch (SQLException sqlExcp) {
+            System.out.println("error:" + sqlExcp.getMessage());
         }
-        System.out.println("### findById: "+microBankParam);
+        System.out.println("### findById: " + microBankParam);
         return microBankParam;
     }
+
+    //get share face value
+
+    public int getShareFaceValue(int groupMasterID) {
+        System.out.println("getting share balance ");
+        int ShareFaceValue = 0;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException cnf) {
+            System.out.println("Driver Class Not Found...." + cnf.getMessage());
+        }
+
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL);
+            PreparedStatement preparedStatement = conn.prepareStatement(fetchShareFacevalue);
+            preparedStatement.setInt(1, groupMasterID);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                ShareFaceValue = rs.getInt("share_face_value");
+            }
+        } catch (Exception excp) {
+            System.out.println("error:" + excp.getMessage());
+        }
+        System.out.println("Share balance for group member:" + ShareFaceValue + "for all members");
+        return ShareFaceValue;
+    }
+
 }

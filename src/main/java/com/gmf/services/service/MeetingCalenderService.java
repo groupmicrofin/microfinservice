@@ -21,7 +21,7 @@ public class MeetingCalenderService {
         //3. Get Group Param
         MicroBankParam microBankParam = paramDaoService.findById(groupMasterID);
         int shareFaceValue = microBankParam.getShareFaceValue();
-        /*
+
         //4. create meeting calender
         MeetingCalender meetingCalender = new MeetingCalender();
         meetingCalender.setCycleNo(maxCycleNo);
@@ -29,6 +29,5 @@ public class MeetingCalenderService {
         meetingCalender.setShareAmount(shareFaceValue);
         meetingCalender.setStatus("A");
         calenderDaoService.createMeetingCalender(meetingCalender);
-        */
     }
 }
