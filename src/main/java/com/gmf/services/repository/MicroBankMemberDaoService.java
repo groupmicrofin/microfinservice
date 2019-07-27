@@ -12,6 +12,8 @@ public class MicroBankMemberDaoService {
     private String createMicroBankMemberQuery = "insert into group_members(group_master_id,name,mail,password,mobile,birth_date , kyc_doc_type,kyc_id,member_status,share_balance,audit_created_dttm,audit_updated_dttm)VALUES(?,?,?,?,?,?,?,?,'A',?,sysdate(),sysdate())";
     private String fetchTotalActiveMemberSQL = "select count(1) active_members from group_members where group_master_id=? and member_status='A';";
     private String fetchShareBalance = "select share_balance FROM micro_finance.group_members where group_master_id=1;";
+    private String updateGroupMember="update micro_finance.group_members set share_balance=share_balance+100,calender_id=2  where group_master_id=1 and id=1;";
+
 
     public void createMicroBankMembers(MicroBankMember microBankMember) {
         System.out.println("dao method started");
@@ -105,7 +107,7 @@ public class MicroBankMemberDaoService {
         try {
             Connection conn = DriverManager.getConnection(DB_URL);
             PreparedStatement preparedStatement = conn.prepareStatement(fetchShareBalance);
-            preparedStatement.setInt(1, groupMasterId);
+            preparedStatement.setInt(1, microBankMember.getGroupMasterID());
             ResultSet rs = preparedStatement.executeQuery(fetchShareBalance);
 
             if (rs.next()) {

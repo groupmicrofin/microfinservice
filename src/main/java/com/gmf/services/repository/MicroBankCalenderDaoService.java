@@ -10,6 +10,7 @@ public class MicroBankCalenderDaoService {
 
     private String fetchNextMeetingCycleNo = "select IFNULL(max(cycle_no),0)+1 cycle_no from micro_finance.meeting_calender where group_master_id=?;";
     private String createMeetingCalenderQuery = "insert into micro_finance.meeting_calender (group_master_id,cycle_no,share_amount,meeting_start_date,meeting_end_date,total_active_members,status)VALUES(?,?,?,sysdate(),sysdate(),?,?);";
+    private String fetchCalenderId = "select id AS calender_id from micro_finance.meeting_calender where group_master_id=1 and status='A';";
 
     public int fetchNextMeetingCycleNo(int groupMasterId) {
         System.out.println("max current cycle number taken");
@@ -28,9 +29,9 @@ public class MicroBankCalenderDaoService {
         try {
             conn = DriverManager.getConnection(DB_URL);
             prestmt = conn.prepareStatement(fetchNextMeetingCycleNo);
-            prestmt.setInt(1,groupMasterId);
+            prestmt.setInt(1, groupMasterId);
             ResultSet rs = prestmt.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 maxCycleNo = rs.getInt("cycle_no");
                 System.out.println("maxCycleNo=" + maxCycleNo);
             }
@@ -46,8 +47,6 @@ public class MicroBankCalenderDaoService {
 
     public void createMeetingCalender(MeetingCalender meetingCalender) {
         System.out.println("meeting calender created");
-
-        //TODO
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -96,4 +95,29 @@ public class MicroBankCalenderDaoService {
         System.out.println("Second try and catch method complete");
     }
 
+    public int getCalenderId(MeetingCalender meetingCalender) {
+        System.out.println("get calender process started ");
+        int calenderId = 0;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException cnf) {
+            System.out.println("Driver Class Not Found....");
+        }
+        System.out.println("first try and catch method complete");
+
+        try {
+            Connection connection = DriverManager.getConnection(DB_URL);
+            PreparedStatement preparedStatement = connection.prepareStatement(fetchCalenderId);
+            preparedStatement.setInt(1, meetingCalender.getId());
+            ResultSet rs = preparedStatement.executeQuery(fetchCalenderId);
+            if (rs.next()) {
+                calenderId = rs.getInt("Id");
+                System.out.println("calender id is:" + calenderId);
+            }
+        } catch (Exception excp) {
+            System.out.println("error:" + excp.getMessage());
+        }
+        return calenderId;
+    }
 }

@@ -1,6 +1,7 @@
 package com.gmf.services.resource;
 
 import com.gmf.services.model.MicroBankMember;
+import com.gmf.services.service.MicroBankMamberUpdatingService;
 import com.gmf.services.service.MicroBankMemberRegistrationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +25,8 @@ public class MicroBankMemberResource {
     }
     public ResponseEntity<?> updateMicroBankMembers(@RequestBody MicroBankMember microBankMember){
         System.out.println("updating microBank Member");
-        //microBankMemberUpdateService
-
+        MicroBankMamberUpdatingService microBankMamberUpdatingService=new MicroBankMamberUpdatingService();
+        return null;
     }
 
 }

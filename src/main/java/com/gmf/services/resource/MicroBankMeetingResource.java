@@ -21,4 +21,6 @@ public class MicroBankMeetingResource {
         microBankMeetingService.startMeetingService(groupMasterID);
         return new ResponseEntity<String>("Success", HttpStatus.OK);
     }
+
+
 }
