@@ -1,0 +1,17 @@
+alter table micro_finance.group_masters MODIFY audit_created_dttm DATETIME;
+alter table micro_finance.group_masters MODIFY  audit_updated_dttm DATETIME;
+
+alter table micro_finance.group_members MODIFY audit_created_dttm DATETIME;
+alter table micro_finance.group_members MODIFY  audit_updated_dttm DATETIME;
+
+
+alter table micro_finance.meeting_calender MODIFY meeting_start_date DATETIME;
+alter table micro_finance.meeting_calender MODIFY meeting_end_date DATETIME;
+
+--date to be with appropriate conversion.. str_to_date
+--audit columns to have DATETIME
+
+ALTER TABLE `micro_finance`.`group_balances` 
+CHANGE COLUMN `audit_created_dttm` `audit_created_dttm` DATETIME NULL ,
+CHANGE COLUMN `dat_last_meeting` `dat_last_meeting` DATE NULL ,
+CHANGE COLUMN `dat_next_meeting` `dat_next_meeting` DATE NULL ;
