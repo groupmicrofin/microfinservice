@@ -23,9 +23,10 @@ CREATE TABLE `group_params` (
   `audit_created_date` date DEFAULT NULL,
   `audit_updated_date` date DEFAULT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_grp_param_1` (`group_master_id`),
   KEY `FK_grpmst_1` (`group_master_id`),
   CONSTRAINT `FK_grpmst_1` FOREIGN KEY (`group_master_id`) REFERENCES `group_masters` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB AUTO_INCREMENT=1 ;
 
 CREATE TABLE `meeting_calender` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -92,8 +93,7 @@ CREATE TABLE `loan_masters` (
   KEY `FK_grpmst_3` (`group_master_id`),
   KEY `FK_grpmembr1` (`group_member_id`),
   CONSTRAINT `FK_grpmembr1` FOREIGN KEY (`group_member_id`) REFERENCES `group_members` (`id`),
-  CONSTRAINT `FK_grpmst_3` FOREIGN KEY (`group_master_id`) REFERENCES `group_masters` (`id`),
-  CONSTRAINT `group_member_id` FOREIGN KEY (`id`) REFERENCES `group_members` (`id`)
+  CONSTRAINT `FK_grpmst_3` FOREIGN KEY (`group_master_id`) REFERENCES `group_masters` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 ;
 
 

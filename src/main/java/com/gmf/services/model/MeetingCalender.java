@@ -1,14 +1,14 @@
 package com.gmf.services.model;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 public class MeetingCalender {
     private int id;
     private int groupMasterId;
     private int cycleNo;
     private int shareAmount;
-    private LocalDate meetingStartDate;
-    private LocalDate meetingEndDate;
+    private Date meetingStartDate;
+    private Date meetingEndDate;
     private int totalActiveMembers;
     private String status;
 
@@ -45,19 +45,19 @@ public class MeetingCalender {
         this.shareAmount = shareAmount;
     }
 
-    public LocalDate getMeetingStartDate() {
+    public Date getMeetingStartDate() {
         return meetingStartDate;
     }
 
-    public void setMeetingStartDate(LocalDate meetingStartDate) {
+    public void setMeetingStartDate(Date meetingStartDate) {
         this.meetingStartDate = meetingStartDate;
     }
 
-    public LocalDate getMeetingEndDate() {
+    public Date getMeetingEndDate() {
         return meetingEndDate;
     }
 
-    public void setMeetingEndDate(LocalDate meetingEndDate) {
+    public void setMeetingEndDate(Date meetingEndDate) {
         this.meetingEndDate = meetingEndDate;
     }
 

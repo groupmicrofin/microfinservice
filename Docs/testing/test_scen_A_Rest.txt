@@ -5,7 +5,7 @@ UPDATE group_members SET calender_id=NULL;
 DELETE FROM group_members;
 DELETE FROM meeting_calender;
 DELETE FROM ln_installments;
-DELETE FROM loan_masters; 
+DELETE FROM loan_masters;
 DELETE FROM group_balances;
 DELETE FROM group_masters;
 
@@ -16,24 +16,24 @@ curl -X POST -H "Content-Type: application/json" -d '{"name":"umariya_society", 
 
 test 1.2-----Socity Parameter Configuration (Event – 2)
 
-curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterId":3,"groupStartDate":"2019-01-01","meetingFrequency":1,"meetingSchedule":"last_sunday","shareFaceValue":100 ,"loanInterestRate":12.0,"loanInterestBase":1.0,"lnDisbAmountMaxLimitPercent":200,"loanGaurantersCount":2}' http://localhost:8080/microfinserv1/bankparam/
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterId":10,"groupStartDate":"2019-01-01","meetingFrequency":1,"meetingSchedule":"last_sunday","shareFaceValue":100 ,"loanInterestRate":12.0,"loanInterestBase":1.0,"lnDisbAmountMaxLimitPercent":200,"loanGaurantersCount":2}' http://localhost:8080/microfinserv1/bankparam/
 
 -----test1.3---Group Member Registration (Event – 4)
 
-curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":3,"name":"ankit","mail":"ankit01@gmail.com","mobile":98765432,"birthdate":"1994-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":10,"name":"hemo","mail":"hemo091@gmail.com","mobile":98765432,"birthdate":"2019-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
 
-curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":3,"name":"ajay","mail":"ajay01@gmail.com","mobile":98765432,"birthdate":"1995-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":13,"name":"ankit","mail":"ankit1@gmail.com","mobile":98765432,"birthdate":"2019-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
 
-curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":3,"name":"anil","mail":"anil01@gmail.com","mobile":98225432,"birthdate":"1996-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":13,"name":"sachin","mail":"sachin1@gmail.com","mobile":98765432,"birthdate":"2019-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
 
-curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":3,"name":"amol","mail":"amol01@gmail.com","mobile":98335432,"birthdate":"1993-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":13,"name":"manish","mail":"manish1@gmail.com","mobile":98765432,"birthdate":"2019-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
 
- 
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":13,"name":"jignesh","mail":"jignesh1@gmail.com","mobile":98765432,"birthdate":"2019-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
 
 -----test 2.1---Start Meeting (Event – 5)
 
 
-curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":3}' http://localhost:8080/microfinserv1/startmeeting/
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":13}' http://localhost:8080/microfinserv1/startmeeting/
 
 	--Get cycle_no : 1
 	select IFNULL(max(cycle_no),0)+1 cycle_no from micro_finance.meeting_calender where group_master_id=1;
@@ -52,3 +52,36 @@ curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID"
 	--Get active Loan accounts
 	select * from micro_finance.loan_masters where group_master_id=1 and amt_ln_balance > 0;
 	--Active loan accounts are 0 hence no interest charging required.
+	
+-----test2.2--Share Amount collection (Event – 6)(For All members)
+
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":13 ,"shareFaceValue:100" , "calender_id:1"}' http://localhost:8080/microfinserv1/sharecollectionforall/
+
+
+----test2.3---Get Total Cash Balance (Event – 9)
+
+	---totalShareBalance-500
+		select sum(share_balance) AS totalShareBalance
+		from micro_finance.group_members
+		where member_status='A' and group_master_id=1;
+			
+	---totalLoanDisbursed = ln_masters (sum(amt_ln_disb))--0
+		select ifnull(sum(amt_ln_disb),0) AS totalLoanDisbursed
+		from micro_finance.loan_masters
+		where group_master_id=1;
+	
+	--totalInstallmentPaidAmount = ln_installments (sum(amt_int_paid)+sum(amt_princ_paid))---
+				
+		select ifnull(sum(amt_int_paid+amt_princ_paid),0) AS totalInstallmentPaidAmount
+		from micro_finance.ln_installments
+		where group_master_id=1;
+	
+	
+	-totalOtherExpense = group_balances(amt_misc_dr)-0
+			select amt_misc_dr totalOtherExpense
+			from micro_finance.group_balances
+			where group_master_id=1
+	
+	-totalCashBalance = totalShareBalance + totalInstallmentPaidAmount - totalLoanDisbursed-totalOtherExpense
+						= 500 + 0 - 0 -0 = 500
+	

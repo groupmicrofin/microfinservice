@@ -5,10 +5,10 @@ public class LoanMaster {
     private int id;
     private int groupMasterId;
     private int groupMemeberId;
-    private int amtLoanDisb;
-    private int amountLoanBalance;
-    private int amountIntAccur;
-    private int amountIntPaid;
+    private double amtLoanDisb;
+    private double amountLoanBalance;
+    private double amountIntAccur;
+    private double amountIntPaid;
 
     public int getId() {
         return id;
@@ -34,35 +34,35 @@ public class LoanMaster {
         this.groupMemeberId = groupMemeberId;
     }
 
-    public int getAmtLoanDisb() {
+    public double getAmtLoanDisb() {
         return amtLoanDisb;
     }
 
-    public void setAmtLoanDisb(int amtLoanDisb) {
+    public void setAmtLoanDisb(double amtLoanDisb) {
         this.amtLoanDisb = amtLoanDisb;
     }
 
-    public int getAmountLoanBalance() {
+    public double getAmountLoanBalance() {
         return amountLoanBalance;
     }
 
-    public void setAmountLoanBalance(int amountLoanBalance) {
+    public void setAmountLoanBalance(double amountLoanBalance) {
         this.amountLoanBalance = amountLoanBalance;
     }
 
-    public int getAmountIntAccur() {
+    public double getAmountIntAccur() {
         return amountIntAccur;
     }
 
-    public void setAmountIntAccur(int amountIntAccur) {
+    public void setAmountIntAccur(double amountIntAccur) {
         this.amountIntAccur = amountIntAccur;
     }
 
-    public int getAmountIntPaid() {
+    public double getAmountIntPaid() {
         return amountIntPaid;
     }
 
-    public void setAmountIntPaid(int amountIntPaid) {
+    public void setAmountIntPaid(double amountIntPaid) {
         this.amountIntPaid = amountIntPaid;
     }
 

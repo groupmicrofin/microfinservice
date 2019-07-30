@@ -2,16 +2,17 @@ package com.gmf.services.service;
 
 import com.gmf.services.model.MeetingCalender;
 import com.gmf.services.model.MicroBankParam;
-import com.gmf.services.repository.MicroBankCalenderDaoService;
-import com.gmf.services.repository.MicroBankMemberDaoService;
-import com.gmf.services.repository.MicrobankParamDaoService;
+import com.gmf.services.repository.MicroBankCalenderDaoServiceImpl;
+import com.gmf.services.repository.MicroBankMemberDaoServiceImpl;
+import com.gmf.services.repository.MicrobankParamDaoServiceImpl;
 
-public class MeetingCalenderService {
+public class MeetingCalenderServiceImpl implements MeetingCalenderService {
 
-    MicroBankCalenderDaoService calenderDaoService = new MicroBankCalenderDaoService();
-    MicroBankMemberDaoService memberDaoService = new MicroBankMemberDaoService();
-    MicrobankParamDaoService paramDaoService = new MicrobankParamDaoService();
+    MicroBankCalenderDaoServiceImpl calenderDaoService = new MicroBankCalenderDaoServiceImpl();
+    MicroBankMemberDaoServiceImpl memberDaoService = new MicroBankMemberDaoServiceImpl();
+    MicrobankParamDaoServiceImpl paramDaoService = new MicrobankParamDaoServiceImpl();
 
+    @Override
     public void createMeetingCalender(int groupMasterID) {
         System.out.println("Meeting calender created ");
         //1. Get max current cycle no

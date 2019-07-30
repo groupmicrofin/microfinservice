@@ -1,6 +1,7 @@
 package com.gmf.services.repository;
 
 import com.gmf.services.common.MicroBankConfig;
+import com.gmf.services.exception.MicroBankAppException;
 import com.gmf.services.model.MicroBankParam;
 
 import java.sql.*;
@@ -8,16 +9,12 @@ import java.time.LocalDate;
 
 import static com.gmf.services.common.MicroBankConfig.DB_URL;
 
-public class MicrobankParamDaoService {
+public class MicrobankParamDaoServiceImpl implements MicrobankParamDaoService {
 
-    //private String createMicroBankParamQuery = "INSERT INTO group_params (id,group_master_id,group_start_date,meeting_frequency,meeting_schedule,share_face_value,loan_interest_rate,loan_interest_base,loan_disb_amt_max_lim_percent,loan_gaurnters_count,audit_created_date,audit_update_date) VALUES (?,?,sysdate(),1,'last sunday',100,12,1,200,2,sysdate(),sysdate())";
-
-    //private String createMicroBankParamQuery ="INSERT INTO group_params (group_master_id,group_start_date,meeting_frequency,meeting_schedule,share_face_value,loan_interest_rate,loan_interest_base,loan_disb_amt_max_lim_percent,loan_gaurnters_count,audit_created_date,audit_update_date)VALUES (?,sysdate(),1,'last sunday',100,12,1,200,2,sysdate(),sysdate())";
     private String createMicroBankParamQuery = "INSERT INTO group_params (group_master_id,group_start_date,meeting_frequency,meeting_schedule,share_face_value,loan_interest_rate,loan_interest_base,loan_disb_amt_max_lim_percent,loan_gauranters_count,audit_created_date,audit_updated_date)VALUES (?,?,?,?,?,?,?,?,?,sysdate(),sysdate())";
-    private String fetchGroupParamsSQl = "select id,group_start_date,meeting_frequency,meeting_schedule,share_face_value,loan_interest_rate, loan_disb_amt_max_lim_percent,loan_gauranters_count from group_params where group_master_id=?;";
-    private String fetchShareFacevalue = "select share_face_value FROM micro_finance.group_params  where group_master_id=1;";
+    private String fetchGroupParamsSQl = "select id,group_start_date,meeting_frequency,meeting_schedule,share_face_value,loan_interest_rate,loan_interest_base, loan_disb_amt_max_lim_percent,loan_gauranters_count from group_params where group_master_id=?;";
 
-
+    @Override
     public void create(MicroBankParam microBankParam) {
         System.out.println("dao method created");
         try {
@@ -57,7 +54,9 @@ public class MicrobankParamDaoService {
             System.out.println("second try method complete");
 
         } catch (SQLException sqlException) {
-            System.out.println("error in connection" + sqlException.getMessage());
+            System.out.println("Error Param Creation:" + sqlException.getMessage());
+            MicroBankAppException appException = new MicroBankAppException("Error Creating Group Params");
+            throw appException;
         } catch (Exception excep) {
             System.out.println("Exception:" + excep.getMessage());
         } finally {
@@ -67,12 +66,12 @@ public class MicrobankParamDaoService {
                 } catch (SQLException sqlExce) {
                     System.out.println("error in closing connection:" + sqlExce.getMessage());
                 }
-
             }
         }
         System.out.println("second cath method complete");
     }
 
+    @Override
     public MicroBankParam findById(int groupMasterId) {
         System.out.println("group param taken");
         MicroBankParam microBankParam = new MicroBankParam();
@@ -85,15 +84,39 @@ public class MicrobankParamDaoService {
         }
         System.out.println("first try and catch method complete");
         //id,group_start_date,meeting_frequency,meeting_schedule,share_face_value,loan_interest_rate, loan_disb_amt_max_lim_percent,loan_gauranters_count
-        try {
-            Connection conn = DriverManager.getConnection(DB_URL);
-            PreparedStatement preparedStatement = conn.prepareStatement(fetchGroupParamsSQl);
+        try (Connection conn = DriverManager.getConnection(DB_URL); PreparedStatement preparedStatement = conn.prepareStatement(fetchGroupParamsSQl);) {
             preparedStatement.setInt(1, groupMasterId);
             ResultSet rs = preparedStatement.executeQuery();
+
             if (rs.next()) {
-                microBankParam.setId(rs.getInt("id"));
-                Date startDate = rs.getDate("group_start_date");
-                microBankParam.setGroupStartDate(startDate.toLocalDate());
+
+                int id = rs.getInt("id");
+                microBankParam.setId(id);
+
+                LocalDate groupStartDate = rs.getDate("group_start_date").toLocalDate();
+                microBankParam.setGroupStartDate(groupStartDate);
+
+                int meetingFrequency = rs.getInt("meeting_frequency");
+                microBankParam.setMeetingFrequency(meetingFrequency);
+
+                String meetingSchdule = rs.getString("meeting_schedule");
+                microBankParam.setMeetingSchedule(meetingSchdule);
+
+                int shareFaceValue = rs.getInt("share_face_value");
+                microBankParam.setShareFaceValue(shareFaceValue);
+
+                int loanInterestRate = rs.getInt("loan_interest_rate");
+                microBankParam.setLoanInterestRate(loanInterestRate);
+
+                int loanInterestbaserate = rs.getInt("loan_interest_base");
+                microBankParam.setLoanInterestBase(loanInterestbaserate);
+
+                int loanDisbMaxAmount = rs.getInt("loan_disb_amt_max_lim_percent");
+                microBankParam.setLnDisbAmountMaxLimitPercent(loanDisbMaxAmount);
+
+                int loanGuarnterCount = rs.getInt("loan_gauranters_count");
+                microBankParam.setLoanGaurantersCount(loanGuarnterCount);
+
             }
         } catch (SQLException sqlExcp) {
             System.out.println("error:" + sqlExcp.getMessage());
@@ -102,33 +125,33 @@ public class MicrobankParamDaoService {
         return microBankParam;
     }
 
-    //get share face value
-
-    public int getShareFaceValue(int groupMasterID) {
-        System.out.println("getting share balance ");
-        int ShareFaceValue = 0;
+    private String fetchLoanInterestRate="select loan_interest_rate/12 AS monthly_int_rate from group_params where group_master_id=?;";
+    @Override
+    public float fetchLanInterestRate(int groupMasterId){
+        float losnInterestRate=0;
+        System.out.println("getting interest rate");
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException cnf) {
-            System.out.println("Driver Class Not Found...." + cnf.getMessage());
+            System.out.println("Driver Class Not Found....");
         }
+        System.out.println("first try and catch method complete");
 
-        try {
-            Connection conn = DriverManager.getConnection(DB_URL);
-            PreparedStatement preparedStatement = conn.prepareStatement(fetchShareFacevalue);
-            preparedStatement.setInt(1, groupMasterID);
+        try(Connection conn=DriverManager.getConnection(DB_URL)) {
+            PreparedStatement preparedStatement=conn.prepareStatement(fetchLoanInterestRate);
+            preparedStatement.setInt(1,groupMasterId);
+            ResultSet rs=preparedStatement.executeQuery();
 
-            ResultSet rs = preparedStatement.executeQuery();
-
-            if (rs.next()) {
-                ShareFaceValue = rs.getInt("share_face_value");
+            if (rs.next()){
+                losnInterestRate =rs.getFloat("monthly_int_rate");
             }
-        } catch (Exception excp) {
-            System.out.println("error:" + excp.getMessage());
-        }
-        System.out.println("Share balance for group member:" + ShareFaceValue + "for all members");
-        return ShareFaceValue;
-    }
 
+        }catch (SQLException sqlExcp){
+            System.out.println("sql error:"+sqlExcp.getMessage());
+        }catch (Exception e){
+            System.out.println("error:"+e.getMessage());
+        }
+        return losnInterestRate;
+    }
 }

@@ -3,15 +3,17 @@ package com.gmf.services.resource;
 
 import com.gmf.services.model.MicroBnak;
 import com.gmf.services.service.MicroBankRegistrationService;
+import com.gmf.services.service.MicroBankRegistrationServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-public class MicroBankResource {
-    MicroBankRegistrationService bankRegistrationService = new MicroBankRegistrationService();
+public class MicroBankResourceImpl implements MicroBankResource{
+    MicroBankRegistrationService bankRegistrationService = new MicroBankRegistrationServiceImpl();
 
+    @Override
     @RequestMapping(value = "/bankreg", method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity<?> performmicrobankregistrations(@RequestBody MicroBnak microBnak) {
         MicroBnak microBnak1 = bankRegistrationService.performMicroBankRegistration(microBnak);
@@ -20,9 +22,4 @@ public class MicroBankResource {
         }
         return new ResponseEntity<MicroBnak>(microBnak1, HttpStatus.OK);
     }
-
-    // trying
-
-//    perfomrGroupParamsRegistration(@RequestBody )
-
 }
