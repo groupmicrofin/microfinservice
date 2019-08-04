@@ -3,12 +3,16 @@ package com.gmf.services.service;
 import com.gmf.services.model.MicroBnak;
 import com.gmf.services.repository.MicroBankDaoService;
 import com.gmf.services.repository.MicroBankDaoServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Random;
 
-public class MicroBankRegistrationServiceImpl implements MicroBankRegistrationService{
+@Component
+public class MicroBankRegistrationServiceImpl implements MicroBankRegistrationService {
 
-    MicroBankDaoService microBankDaoServiceImpl = new MicroBankDaoServiceImpl();
+    @Autowired
+    MicroBankDaoService microBankDaoServiceImpl;
 
     @Override
     public MicroBnak performMicroBankRegistration(MicroBnak microBnak) {

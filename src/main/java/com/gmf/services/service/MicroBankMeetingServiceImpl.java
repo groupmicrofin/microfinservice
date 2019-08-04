@@ -1,35 +1,43 @@
 package com.gmf.services.service;
 
 import com.gmf.services.model.EvenetLog;
-import com.gmf.services.repository.MicroBankCalenderDaoServiceImpl;
-import com.gmf.services.repository.MicroBankDaoServiceImpl;
-import com.gmf.services.repository.MicroBankEventLogDaoServiceImpl;
+import com.gmf.services.repository.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MicroBankMeetingServiceImpl implements MicroBankMeetingService {
 
-    MeetingCalenderServiceImpl meetingCalenderServiceImpl = new MeetingCalenderServiceImpl();
-    LoanServiceImpl loanServiceImpl = new LoanServiceImpl();
+    @Autowired
+    MeetingCalenderService meetingCalenderService;
+    @Autowired
+    LoanService loanService;
+    @Autowired
+    MicroBankCalenderDaoService microBankCalenderDaoService;
+    @Autowired
+    MicroBankDaoService microBankDaoService;
+    @Autowired
+    MicroBankEventLogDaoService microBankEventLogDaoService;
+
 
     @Override
     public void startMeetingService(int groupMasterId) {
         System.out.println("meeting started for :" + groupMasterId);
+        //TODO validation for already started meeting
         //Create meeting calender
+        meetingCalenderService.createMeetingCalender(groupMasterId);
 
-        meetingCalenderServiceImpl.createMeetingCalender(groupMasterId);
         //For all active loans perform interest calculation and update loan master
-        loanServiceImpl.performLoanInterestCharging(groupMasterId);
-
+        loanService.performLoanInterestCharging(groupMasterId);
         System.out.println("start meeting activity completed");
     }
 
     @Override
     public void endMeetingUpadateService(int groupMasterId, String status) {
-        System.out.println("meeting end for :" + groupMasterId);
-
-        MicroBankCalenderDaoServiceImpl microBankCalenderDaoServiceImpl = new MicroBankCalenderDaoServiceImpl();
-        microBankCalenderDaoServiceImpl.endMeeting(groupMasterId, status);
+        System.out.println("meeting end process for :" + groupMasterId);
+        //TODO validation for already closed meeting
+        microBankCalenderDaoService.endMeeting(groupMasterId, status);
         System.out.println("updated meeting calender ");
-
     }
 
     @Override
@@ -37,8 +45,7 @@ public class MicroBankMeetingServiceImpl implements MicroBankMeetingService {
         System.out.println("debit event start ");
 
         //update group balance
-        MicroBankDaoServiceImpl microBankDaoServiceImpl = new MicroBankDaoServiceImpl();
-        microBankDaoServiceImpl.miscelleniousDebitEventStart(groupMasterId, expenseAmount);
+        microBankDaoService.miscelleniousDebitEventStart(groupMasterId, expenseAmount);
         System.out.println("updating  event for groupMaster");
 
         //insert in group event log
@@ -48,9 +55,7 @@ public class MicroBankMeetingServiceImpl implements MicroBankMeetingService {
         evenetLog.setTxnAmount(expenseAmount);
         evenetLog.setRemark(description);
 
-        MicroBankEventLogDaoServiceImpl microBankEventLogDaoServiceImpl = new MicroBankEventLogDaoServiceImpl();
-        microBankEventLogDaoServiceImpl.insertingGroupEventLog(evenetLog);
+        microBankEventLogDaoService.insertingGroupEventLog(evenetLog);
         System.out.println("insertinh group event log");
-
     }
 }

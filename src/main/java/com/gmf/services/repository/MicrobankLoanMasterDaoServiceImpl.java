@@ -2,27 +2,29 @@ package com.gmf.services.repository;
 
 import com.gmf.services.common.MicroBankConfig;
 import com.gmf.services.model.LoanMaster;
+import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class MicrobankLoanMasterDaoServiceImpl implements MicrobankLoanMasterDaoService {
 
     //SQl Query
     private String fetchActiveLoanMastersSQL = "select id,group_member_id,amt_ln_disb,amt_ln_balance,amt_int_accr,amt_int_paid,group_master_id from loan_masters where group_master_id=? and amt_ln_balance>0;";
-    private String createInterestUpdateQuery = "update loan_masters set amt_ln_balance=amt_ln_balance+1, amt_int_accr = amt_int_accr + 1where group_master_id=1 and id=1;";
+    private String createInterestUpdateQuery = "UPDATE loan_masters SET amt_ln_balance=amt_ln_balance+ROUND(?,2) , amt_int_accr=amt_int_accr+ROUND(?,2) WHERE group_master_id=? AND group_member_id=? ;";
     private String fetchingTotalLoanDisb = "select ifnull(sum(amt_ln_disb),0) AS totalLoanDisbursed from loan_masters where group_master_id=?;";
-    private String createLoanDisburesement = "insert into loan_masters(group_member_id,amt_ln_disb,amt_ln_balance,amt_int_accr,amt_int_paid,group_master_id)values(?,?,0,0,0,?);";
+    private String createLoanDisburesement = "insert into loan_masters(group_member_id,amt_ln_disb,amt_ln_balance,amt_int_accr,amt_int_paid,group_master_id)values(?,?,?,0,0,?);";
     private String fetchLoanMasterbyMemberId="select id,group_member_id,amt_ln_disb,amt_ln_balance,amt_int_accr,amt_int_paid,group_master_id from loan_masters where group_master_id=? and group_member_id=?;";
-    private String updateLoanMaster="UPDATE loan_master SET amt_ln_balance=amt_ln_balanace+? , amt_ln_disb=amt_ln_disb+? WHERE group_master_id=? AND group_member_id=? ;";
+    private String updateLoanMaster="UPDATE loan_masters SET amt_ln_balance=amt_ln_balance+? , amt_ln_disb=amt_ln_disb+? WHERE group_master_id=? AND group_member_id=? ;";
     private String fetchTotalInterestEarned="SELECT SUM(amt_int_paid) AS totalInterestEarned FROM loan_masters WHERE group_master_id=?;";
-    private String fetchloanAmount="select id,amt_ln_balance from loan_masters where group_master_id=? and amt_ln_balance > 0;";
-    private String updateAmountIntPaid="update loan_masters set amt_int_paid=amt_int_paid+?,amt_int_accr=0,amt_ln_balance=amt_ln_balance-? where group_master_id=? and group_member_id=?;";
+    private String fetchloanAmount="SELECT id,group_member_id,amt_ln_disb,amt_ln_balance,amt_int_accr,amt_int_paid,group_master_id FROM loan_masters WHERE group_master_id=? AND amt_ln_balance > 0;";
+    private String updateAmountIntPaid="update loan_masters set amt_int_paid=amt_int_paid+?,amt_int_accr=amt_int_accr-?,amt_ln_balance=amt_ln_balance-? where group_master_id=? and group_member_id=?;";
 
 
     @Override
-    public List<LoanMaster> getActiveLoamAccounts(int groupMasterId) {
+    public List<LoanMaster> getActiveLoamAccounts(int groupMasterId ) {
         System.out.println("active loan accounts taken");
 
         List<LoanMaster> loanAccountList = new ArrayList<>();
@@ -84,12 +86,12 @@ public class MicrobankLoanMasterDaoServiceImpl implements MicrobankLoanMasterDao
 
 
     @Override
-    public void updateLoanMaster(LoanMaster loanMaster) {
+    public void updateLoanMaster(double intAmount,int groupMasterId,int groupMemberId) {
         System.out.println("update interest in loan master");
+        //LoanMaster loanMaster1=new LoanMaster();
         //TODO
 
         Connection conn = null;
-        Statement statement = null;
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -101,9 +103,14 @@ public class MicrobankLoanMasterDaoServiceImpl implements MicrobankLoanMasterDao
         try {
             conn = DriverManager.getConnection(MicroBankConfig.DB_URL);
             System.out.println("input taken");
-            statement = conn.createStatement();
-            ResultSet rs = statement.executeQuery(createInterestUpdateQuery);
-            System.out.println("data updated successfully");
+            PreparedStatement preparedStatement=conn.prepareStatement(createInterestUpdateQuery);
+            preparedStatement.setDouble(1,intAmount);
+            preparedStatement.setDouble(2,intAmount);
+            preparedStatement.setInt(3,groupMasterId);
+            preparedStatement.setInt(4,groupMemberId);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            System.out.println("data updated successfully-rows affected:"+rowsAffected);
         } catch (SQLException sqlExcp) {
             System.out.println("error:" + sqlExcp.getMessage());
         } finally {
@@ -171,10 +178,11 @@ public class MicrobankLoanMasterDaoServiceImpl implements MicrobankLoanMasterDao
             PreparedStatement preparedStatement = conn.prepareStatement(createLoanDisburesement, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, groupMemberId);
             preparedStatement.setDouble(2, amtLoanDisb);
-            preparedStatement.setInt(3, groupMasterId);
+            preparedStatement.setDouble(3,amtLoanDisb);
+            preparedStatement.setInt(4, groupMasterId);
 
             int affectedRows = preparedStatement.executeUpdate();
-            System.out.println("sffected rows are:" + affectedRows);
+            System.out.println("effected rows are:" + affectedRows);
             System.out.println("data taken");
 
             if (affectedRows == 0) {
@@ -268,7 +276,7 @@ public class MicrobankLoanMasterDaoServiceImpl implements MicrobankLoanMasterDao
 
 
     @Override
-    public boolean updateLoanMasterForNewLoan(int groupMasterid , int groupMemberId , double amountLoan){
+    public boolean updateLoanMasterForNewLoan(int groupMasterid , int groupMemberId , double amtLoanDisb){
         boolean result=false;
         System.out.println("updating loan master for new loan");
 
@@ -280,8 +288,8 @@ public class MicrobankLoanMasterDaoServiceImpl implements MicrobankLoanMasterDao
         System.out.println("first try and catch method taken");
         try(Connection conn=DriverManager.getConnection(MicroBankConfig.DB_URL)) {
             PreparedStatement preparedStatement=conn.prepareStatement(updateLoanMaster);
-            preparedStatement.setDouble(1,amountLoan);
-            preparedStatement.setDouble(2,amountLoan);
+            preparedStatement.setDouble(1,amtLoanDisb);
+            preparedStatement.setDouble(2,amtLoanDisb);
             preparedStatement.setInt(3,groupMasterid);
             preparedStatement.setInt(4,groupMemberId);
 
@@ -346,8 +354,23 @@ public class MicrobankLoanMasterDaoServiceImpl implements MicrobankLoanMasterDao
                 int id=rs.getInt("id");
                 loanMaster.setId(id);
 
+                int groupMemberId=rs.getInt("group_member_id");
+                loanMaster.setGroupMemeberId(groupMemberId);
+
+                int amountLoanDisb=rs.getInt("amt_ln_disb");
+                loanMaster.setAmtLoanDisb(amountLoanDisb);
+
                 double amountLoanBalance=rs.getDouble("amt_ln_balance");
                 loanMaster.setAmountLoanBalance(amountLoanBalance);
+
+                double amountIntAccr=rs.getDouble("amt_int_accr");
+                loanMaster.setAmountIntAccur(amountIntAccr);
+
+                double amountIntPaid=rs.getDouble("amt_int_paid");
+                loanMaster.setAmountIntPaid(amountIntPaid);
+
+                int groupMasterId1=rs.getInt("group_master_id");
+                loanMaster.setGroupMasterId(groupMasterId1);
             }
 
         }catch (SQLException sqlExcp){
@@ -358,12 +381,10 @@ public class MicrobankLoanMasterDaoServiceImpl implements MicrobankLoanMasterDao
         return loanMaster;
     }
 
-    //private String updateAmountIntPaid="update micro_finance.loan_masters set amt_int_paid=amt_int_paid+?,amt_int_accr=0,amt_ln_balance=amt_ln_balance-? where group_master_id=? and groupMemberId=?;";
     @Override
-    public boolean updateAmountIntPaid( double installmentAmount,int groupMasterId ,int groupMemberId){
-        System.out.println("updATE DAO SERVICE");
+    public boolean updateAmountIntPaid( int groupMasterId ,int groupMemberId ,double installmentAmount,double interestPaidAmount){
+        System.out.println("update DAO service");
         boolean result=false;
-        LoanMaster loanMaster=new LoanMaster();
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -375,10 +396,11 @@ public class MicrobankLoanMasterDaoServiceImpl implements MicrobankLoanMasterDao
         try {
             Connection conn=DriverManager.getConnection(MicroBankConfig.DB_URL);
             PreparedStatement preparedStatement=conn.prepareStatement(updateAmountIntPaid);
-            preparedStatement.setDouble(1,loanMaster.getAmountIntAccur());
-            preparedStatement.setDouble(2,installmentAmount);
-            preparedStatement.setInt(3,groupMasterId);
-            preparedStatement.setInt(4,groupMemberId);
+            preparedStatement.setDouble(1,interestPaidAmount);
+            preparedStatement.setDouble(2,interestPaidAmount);
+            preparedStatement.setDouble(3,installmentAmount);
+            preparedStatement.setInt(4,groupMasterId);
+            preparedStatement.setInt(5,groupMemberId);
 
             int rowsAffected=preparedStatement.executeUpdate();
             System.out.println("rows affected :"+rowsAffected);
@@ -390,4 +412,5 @@ public class MicrobankLoanMasterDaoServiceImpl implements MicrobankLoanMasterDao
         }
         return result;
     }
+
 }

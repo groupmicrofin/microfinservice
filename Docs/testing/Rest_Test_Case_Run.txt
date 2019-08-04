@@ -1,0 +1,124 @@
+--clean data
+DELETE FROM group_event_log;
+DELETE FROM group_params;
+UPDATE group_members SET calender_id=NULL;
+DELETE FROM group_members;
+DELETE FROM meeting_calender;
+DELETE FROM ln_installments;
+DELETE FROM loan_masters;
+DELETE FROM group_balances;
+DELETE FROM group_masters;
+
+
+**test 1.1-----Socity Registration (Event – 1)
+
+--group registration
+curl -X POST -H "Content-Type: application/json" -d '{"name":"Umariya", "email":"umariya01@gmail.com", "passphrase":"password"}' http://localhost:8080/microfinserv1/bankreg/
+
+**test 1.2-----Socity Parameter Configuration (Event – 2)
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterId":23,"groupStartDate":"2019-01-01","meetingFrequency":1,"meetingSchedule":"last_sunday","shareFaceValue":100 ,"loanInterestRate":12.0,"loanInterestBase":2.0,"lnDisbAmountMaxLimitPercent":200,"loanGaurantersCount":2}' http://localhost:8080/microfinserv1/bankparam/
+
+**test1.3---Group Member Registration (Event – 4)
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":23,"name":"hemo","mail":"hemo01@gmail.com","mobile":98765432,"birthdate":"1996-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
+
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":23,"name":"ankit","mail":"ankit01@gmail.com","mobile":98765432,"birthdate":"1994-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":23,"name":"sachin","mail":"sachin01@gmail.com","mobile":98765432,"birthdate":"1998-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":23,"name":"manish","mail":"manish101@gmail.com","mobile":98765432,"birthdate":"1994-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":23,"name":"jignesh","mail":"jignesh01@gmail.com","mobile":98765432,"birthdate":"1985-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":23,"name":"jatin","mail":"jatin01@gmail.com","mobile":94465432,"birthdate":"1995-03-09" ,"kycDcType":"adharCard","kycID":"adhar01","shareBalance":0}' http://localhost:8080/microfinserv1/bankmember/
+
+**test 2.1---Start Meeting (Event – 5)
+
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterId":23}' http://localhost:8080/microfinserv1/startmeeting/
+
+**test2.2--Share Amount collection (Event – 6)(For All members)
+
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":23}' http://localhost:8080/microfinserv1/sharecollectionforall/
+
+**test2.3---Get Total Cash Balance (Event – 9)
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":23}' http://localhost:8080/microfinserv1/totalcashbalance/
+
+**test2.4---Loan Disbursment (Event – 10)
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterId":23,"amtLoanDisb": 100.0,"groupMemberId":65 ,"gaurnterData":"2:3"}' http://localhost:8080/microfinserv1/loandisbursment/
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterId":23,"amtLoanDisb": 200.0,"groupMemberId":66 ,"gaurnterData":"3:4"}' http://localhost:8080/microfinserv1/loandisbursment/
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterId":23,"amtLoanDisb": 100.0,"groupMemberId":67 ,"gaurnterData":"4:5"}' http://localhost:8080/microfinserv1/loandisbursment/
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterId":23,"amtLoanDisb": 100.0,"groupMemberId":68 ,"gaurnterData":"1:5"}' http://localhost:8080/microfinserv1/loandisbursment/
+
+**test2.5---Get Total Cash Balance (Event – 9)
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":23}' http://localhost:8080/microfinserv1/totalcashbalance/
+
+**test2.6---Meeting End (Event – 11)
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterId":23}' http://localhost:8080/microfinserv1/endmeeting/
+
+**test3.1---Start Meeting (Event – 5)
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterId":23}' http://localhost:8080/microfinserv1/startmeeting/
+
+**test3.1.1---Get Total Cash Balance (Event – 9)
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":23}' http://localhost:8080/microfinserv1/totalcashbalance/
+
+**test3.2---Share Amount collection (Event – 6)
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":23, "id":65}' http://localhost:8080/microfinserv1/sharecollectionforIndividual/
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":23, "id":66}' http://localhost:8080/microfinserv1/sharecollectionforIndividual/
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":23, "id":67}' http://localhost:8080/microfinserv1/sharecollectionforIndividual/
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":23, "id":68}' http://localhost:8080/microfinserv1/sharecollectionforIndividual/
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":23, "id":69}' http://localhost:8080/microfinserv1/sharecollectionforIndividual/
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterID":23, "id":70}' http://localhost:8080/microfinserv1/sharecollectionforIndividual/
+
+**test3.3---Loan Installment Collection (Event – 8) 
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterId":23,"groupMemberId":65,"installmentAmount":101}' http://localhost:8080/microfinserv1/loaninstallmentcollection/
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterId":23,"groupMemberId":66,"installmentAmount":102}' http://localhost:8080/microfinserv1/loaninstallmentcollection/
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterId":23,"groupMemberId":67,"installmentAmount":101}' http://localhost:8080/microfinserv1/loaninstallmentcollection/
+
+**test3.4-- Get Total Cash Balance of the group
+
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterId":23}'http://localhost:8080/microfinserv1/totalcashbalance/
+
+**test3.5---Loan Disbursment (Event – 10)
+
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterId": 22,"amtLoanDisb": 100.0,"groupMemberId":62 ,"gaurnterData":"2:3"}' http://localhost:8080/microfinserv1/loandisbursment/
+
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterId": 22,"amtLoanDisb": 200.0,"groupMemberId":63 ,"gaurnterData":"3:4"}' http://localhost:8080/microfinserv1/loandisbursment/
+
+**test3.6---Meeting End (Event – 11)
+
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterId":23,"status":"A"}' http://localhost:8080/microfinserv1/endmeeting/
+
+
+
+
+**test4.1---Start Meeting (Event – 5)
+
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterId":23}' http://localhost:8080/microfinserv1/startmeeting/
+
+**test4.2---Share Amount collection (Event – 6)
+
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterId":23 ,"shareFaceValue":100 }' http://localhost:8080/microfinserv1/sharecollectionforall/
+
+**test4.3---Loan Installment Collection (Event – 8) 
+
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterId":23,"groupMemberId":60,"installmentAmount":101}' http://localhost:8080/microfinserv1/loaninstallmentcollection/
+
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterId":23,"groupMemberId":62,"installmentAmount":200}' http://localhost:8080/microfinserv1/loaninstallmentcollection/
+
+
+**test4.4-- Get Total Cash Balance of the group
+
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterId":23}'http://localhost:8080/microfinserv1/totalcashbalance/
+
+**test4.5---Loan Disbursment (Event – 10)
+
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterId": 22,"amtLoanDisb": 100.0,"groupMemberId":62 ,"gaurnterData":"2:3"}' http://localhost:8080/microfinserv1/loandisbursment/
+
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterId": 22,"amtLoanDisb": 200.0,"groupMemberId":63 ,"gaurnterData":"3:4"}' http://localhost:8080/microfinserv1/loandisbursment/
+
+**test4.6---Meeting End (Event – 11)
+
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterId":23,"status":"A"}' http://localhost:8080/microfinserv1/endmeeting/
+
+
+**Event - 12 Get Total Earning
+curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterId":18}' http://localhost:8080/microfinserv1/totalearning/
+
+**Event - 13 Miscellenious Debit Event
+
+	curl -X POST -H "Content-Type: application/json" --data-binary '{"groupMasterId":20,"groupMemberId":""; "expenseAmount":0,"expenseAmount":0,"description":"other debit"}' http://localhost:8080/microfinserv1/miscelleniousDebitEvent/

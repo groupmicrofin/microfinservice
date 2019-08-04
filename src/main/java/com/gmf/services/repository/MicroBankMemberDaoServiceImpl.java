@@ -1,17 +1,19 @@
 package com.gmf.services.repository;
 
-        import com.gmf.services.model.MicroBankMember;
+import com.gmf.services.model.MicroBankMember;
+import org.springframework.stereotype.Component;
 
-        import java.sql.*;
+import java.sql.*;
 
-        import static com.gmf.services.common.MicroBankConfig.DB_URL;
+import static com.gmf.services.common.MicroBankConfig.DB_URL;
 
+@Component
 public class MicroBankMemberDaoServiceImpl implements MicroBankMemberDaoService {
 
     private String createMicroBankMemberQuery = "insert into group_members(group_master_id,name,mail,password,mobile,birth_date , kyc_doc_type,kyc_id,member_status,share_balance,audit_created_dttm,audit_updated_dttm)VALUES(?,?,?,?,?,?,?,?,'A',?,sysdate(),sysdate())";
     private String fetchTotalActiveMemberSQL = "select count(1) active_members from group_members where group_master_id=? and member_status='A';";
     private String fetchShareBalance = "select share_balance FROM group_members where group_master_id=1;";
-    private String updatingShareCollectionForAll = "update group_members set share_balance=share_balance+?,calender_id=? where group_master_id=?;";
+    private String updatingShareCollectionForAll = "update group_members set share_balance=share_balance+?,calender_id=? where group_master_id=? ;";
     private String fetchTotalShareBalanceSQL = "select sum(share_balance) AS totalShareBalance from group_members where member_status=? and group_master_id=?;";
     private String updatingShareCollectionForIndividual = "update group_members set share_balance=share_balance+?,calender_id=? where group_master_id=? and id=?;";
 
@@ -215,7 +217,7 @@ public class MicroBankMemberDaoServiceImpl implements MicroBankMemberDaoService 
 
         try {
             conn = DriverManager.getConnection(DB_URL);
-            PreparedStatement preparedStatement = conn.prepareStatement(updatingShareCollectionForAll);
+            PreparedStatement preparedStatement = conn.prepareStatement(updatingShareCollectionForIndividual);
             preparedStatement.setInt(1, shareFaceValue);
             preparedStatement.setInt(2, currentCalenderID);
             preparedStatement.setInt(3, groupMasteId);

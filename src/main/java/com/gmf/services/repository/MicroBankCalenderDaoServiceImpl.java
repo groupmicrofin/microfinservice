@@ -3,19 +3,21 @@ package com.gmf.services.repository;
 import com.gmf.services.common.MicroBankConfig;
 import com.gmf.services.exception.MicroBankAppException;
 import com.gmf.services.model.MeetingCalender;
+import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.util.Date;
 
 import static com.gmf.services.common.MicroBankConfig.DB_URL;
 
+@Component
 public class MicroBankCalenderDaoServiceImpl implements MicroBankCalenderDaoService {
 
     private String fetchNextMeetingCycleNo = "select IFNULL(max(cycle_no),0)+1 cycle_no from meeting_calender where group_master_id=?;";
     private String createMeetingCalenderQuery = "insert into meeting_calender (group_master_id,cycle_no,share_amount,meeting_start_date,meeting_end_date,total_active_members,status)VALUES(?,?,?,sysdate(),sysdate(),?,?);";
     private String fetchCalenderSQL = "SELECT id,group_master_id,cycle_no,share_amount,meeting_start_date,meeting_end_date,total_active_members,status FROM meeting_calender WHERE group_master_id=? AND STATUS=?;";
-    private String updateMeetingCalenderAtEndSQL="update meeting_calender set status='C',meeting_end_date=sysdate() where group_master_id=? and status=?;";
-    private String fetchCalenderId="select id AS calender_id from meeting_calender where group_master_id=? and status=?;";
+    private String updateMeetingCalenderAtEndSQL = "update meeting_calender set status='C',meeting_end_date=sysdate() where group_master_id=? and status=?;";
+    private String fetchCalenderId = "select id AS calender_id from meeting_calender where group_master_id=? and status=?;";
 
 
     @Override
@@ -172,54 +174,57 @@ public class MicroBankCalenderDaoServiceImpl implements MicroBankCalenderDaoServ
 
     //private String updateMeetingCalenderAtEndSQL="update micro_finance.meeting_calender set status='C',meeting_end_date=sysdate() where group_master_id=? and status=?;";
     @Override
-    public void endMeeting(int groupmasterId , String status){
+    public void endMeeting(int groupmasterId, String status) {
         System.out.println("dao service started");
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-        }catch (ClassNotFoundException cnf){
+        } catch (ClassNotFoundException cnf) {
             System.out.println("driver class not found....");
         }
         System.out.println("first try and catch method taken");
         try {
-            Connection conn=DriverManager.getConnection(DB_URL);
-            PreparedStatement preparedStatement=conn.prepareStatement(updateMeetingCalenderAtEndSQL);
-            preparedStatement.setInt(1,groupmasterId);
-            preparedStatement.setString(2,status);
-            int rs=preparedStatement.executeUpdate();
+            Connection conn = DriverManager.getConnection(DB_URL);
+            PreparedStatement preparedStatement = conn.prepareStatement(updateMeetingCalenderAtEndSQL);
+            preparedStatement.setInt(1, groupmasterId);
+            preparedStatement.setString(2, status);
+            int rs = preparedStatement.executeUpdate();
+
+            System.out.println("effected rows :" + rs);
             System.out.println("data updated successufuly");
-        }catch (SQLException sqlExcp){
-            System.out.println("sql error:"+sqlExcp.getMessage());
-        }catch (Exception e){
-            System.out.println("error:"+e.getMessage());
+
+        } catch (SQLException sqlExcp) {
+            System.out.println("sql error:" + sqlExcp.getMessage());
+        } catch (Exception e) {
+            System.out.println("error:" + e.getMessage());
         }
     }
 
     @Override
-    public int getCalenderId(int groupMasterId,String status){
+    public int getCalenderId(int groupMasterId, String status) {
         System.out.println("getting calender id");
-        int calenderId=0;
+        int calenderId = 0;
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-        }catch (ClassNotFoundException cnf){
+        } catch (ClassNotFoundException cnf) {
             System.out.println("driver class not found....");
         }
         System.out.println("first try and catch method taken");
 
-        try (Connection conn=DriverManager.getConnection(DB_URL)){
-            PreparedStatement preparedStatement=conn.prepareStatement(fetchCalenderId);
-            preparedStatement.setInt(1,groupMasterId);
-            preparedStatement.setString(2,status);
-            ResultSet rs=preparedStatement.executeQuery();
+        try (Connection conn = DriverManager.getConnection(DB_URL)) {
+            PreparedStatement preparedStatement = conn.prepareStatement(fetchCalenderId);
+            preparedStatement.setInt(1, groupMasterId);
+            preparedStatement.setString(2, status);
+            ResultSet rs = preparedStatement.executeQuery();
 
-            if (rs.next()){
-                calenderId=rs.getInt("id");
+            if (rs.next()) {
+                calenderId = rs.getInt("id");
             }
-        }catch (SQLException sqlExcp){
-            System.out.println("Sql error:"+sqlExcp.getMessage());
-        }catch (Exception e){
-            System.out.println("error:"+e.getMessage());
+        } catch (SQLException sqlExcp) {
+            System.out.println("Sql error:" + sqlExcp.getMessage());
+        } catch (Exception e) {
+            System.out.println("error:" + e.getMessage());
         }
         return calenderId;
     }

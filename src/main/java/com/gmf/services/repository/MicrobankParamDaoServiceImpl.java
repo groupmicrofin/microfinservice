@@ -3,12 +3,14 @@ package com.gmf.services.repository;
 import com.gmf.services.common.MicroBankConfig;
 import com.gmf.services.exception.MicroBankAppException;
 import com.gmf.services.model.MicroBankParam;
+import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.time.LocalDate;
 
 import static com.gmf.services.common.MicroBankConfig.DB_URL;
 
+@Component
 public class MicrobankParamDaoServiceImpl implements MicrobankParamDaoService {
 
     private String createMicroBankParamQuery = "INSERT INTO group_params (group_master_id,group_start_date,meeting_frequency,meeting_schedule,share_face_value,loan_interest_rate,loan_interest_base,loan_disb_amt_max_lim_percent,loan_gauranters_count,audit_created_date,audit_updated_date)VALUES (?,?,?,?,?,?,?,?,?,sysdate(),sysdate())";

@@ -2,16 +2,23 @@ package com.gmf.services.repository;
 
 import com.gmf.services.common.MicroBankConfig;
 import com.gmf.services.model.MicroBnak;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 
 import java.sql.*;
 
-public class MicroBankDaoServiceImpl implements MicroBankDaoService{
+@Component
+public class MicroBankDaoServiceImpl implements MicroBankDaoService {
 
     private String createMicroBankQuery = "INSERT INTO group_masters (name,login_id,email,password,audit_created_dttm,audit_updated_dttm) VALUES (?,?,?,?,sysdate(),sysdate())";
     private String microMicroBankBalanceSql = "INSERT INTO group_balances (group_master_id,amt_share_fac_bal,amt_share_fac_bal_others,amt_misc_dr,audit_created_dttm) VALUES (?, 0, 0, 0, sysdate())";
     private String fetchTotalOtherExpenssSQL = "SELECT amt_misc_dr AS totalOtherExpense FROM group_balances WHERE group_master_id=?;";
     private String fetchTotalMiscDrAmountSQL = "SELECT SUM(amt_misc_dr) as amountMisc  FROM group_balances WHERE group_master_id=?;";
     private String updateMiscDebitDataSQL = "UPDATE group_balances SET amt_misc_dr= amt_misc_dr + ? WHERE group_master_id=?;";
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @Override
     public MicroBnak addMicroBank(MicroBnak microBnak) {

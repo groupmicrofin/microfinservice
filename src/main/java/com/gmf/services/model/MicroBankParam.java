@@ -21,7 +21,7 @@ public class MicroBankParam {
     private String meetingSchedule;
     private int shareFaceValue;
     private float loanInterestRate;
-    private float loanInterestBase;
+    private int loanInterestBase;
     private int lnDisbAmountMaxLimitPercent;
     private int loanGaurantersCount;
     private LocalDate auditCreatedDate;
@@ -83,11 +83,11 @@ public class MicroBankParam {
         this.loanInterestRate = loanInterestRate;
     }
 
-    public float getLoanInterestBase() {
+    public int getLoanInterestBase() {
         return loanInterestBase;
     }
 
-    public void setLoanInterestBase(float loanInterestBase) {
+    public void setLoanInterestBase(int loanInterestBase) {
         this.loanInterestBase = loanInterestBase;
     }
 

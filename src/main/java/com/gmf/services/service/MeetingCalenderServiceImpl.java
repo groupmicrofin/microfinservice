@@ -5,15 +5,25 @@ import com.gmf.services.model.MicroBankParam;
 import com.gmf.services.repository.MicroBankCalenderDaoServiceImpl;
 import com.gmf.services.repository.MicroBankMemberDaoServiceImpl;
 import com.gmf.services.repository.MicrobankParamDaoServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MeetingCalenderServiceImpl implements MeetingCalenderService {
 
-    MicroBankCalenderDaoServiceImpl calenderDaoService = new MicroBankCalenderDaoServiceImpl();
-    MicroBankMemberDaoServiceImpl memberDaoService = new MicroBankMemberDaoServiceImpl();
-    MicrobankParamDaoServiceImpl paramDaoService = new MicrobankParamDaoServiceImpl();
+    @Autowired
+    MicroBankCalenderDaoServiceImpl calenderDaoService;
+    @Autowired
+    MicroBankMemberDaoServiceImpl memberDaoService;
+    @Autowired
+    MicrobankParamDaoServiceImpl paramDaoService;
+
+
+
 
     @Override
     public void createMeetingCalender(int groupMasterID) {
+
         System.out.println("Meeting calender created ");
         //1. Get max current cycle no
         int maxCycleNo = calenderDaoService.fetchNextMeetingCycleNo(groupMasterID);
@@ -29,6 +39,7 @@ public class MeetingCalenderServiceImpl implements MeetingCalenderService {
         meetingCalender.setGroupMasterId(groupMasterID);
         meetingCalender.setShareAmount(shareFaceValue);
         meetingCalender.setStatus("A");
+        meetingCalender.setTotalActiveMembers(totalActiveLnAccts);
         calenderDaoService.createMeetingCalender(meetingCalender);
     }
 }
